@@ -531,7 +531,7 @@ function myLinks(skip){
 let P=null;
 function blankShift(){ const last=P&&P.shifts.length?P.shifts[P.shifts.length-1]:null; return last?Object.assign({},last):{role:'',date:P?P.start:'',start:'09:00',end:'18:00',mode:'時薪',price:'',count:'',rescue:false,rescuePrice:''}; }
 function postPage(){
-  if(!P){ const e=S.employer||{}; P={company:e.name||'',type:e.type==='個人師傅'?'個人師傅':'公司',taxid:e.taxid||'',contact:e.contact||'',phone:e.phone||'',title:'',hall:'活動館',city:'',place:'',start:'',end:'',dress:'',meal:'',insurance:'會',pay:'活動結束後 7 天內匯款',notes:'',shifts:[]}; P.shifts.push(blankShift()); }
+  if(!P){ const e=S.employer||{}; P={company:e.name||'',type:e.type==='個人師傅'?'個人師傅':'公司',taxid:e.taxid||'',contact:e.contact||'',phone:e.phone||'',title:'',hall:'活動館',city:'',place:'',start:'',end:'',dress:'',meal:'',insurance:'有',pay:'活動結束後 7 天內匯款',notes:'',shifts:[]}; P.shifts.push(blankShift()); }
   const isoD=function(d){ return String(d||'').replace(/\//g,'-'); };
   const opt=function(arr,v){ return arr.map(function(x){return '<option'+(x===v?' selected':'')+'>'+x+'</option>';}).join(''); };
   $app.innerHTML='<a class="back" href="#/boss">‹ 返回</a><div class="page"><div class="ph"><h1>刊登一檔活動</h1><p class="muted">所有職務和班別放在同一則</p></div>'+
@@ -556,7 +556,7 @@ function postPage(){
       '<button class="btn g" id="p_add">＋ 新增班別</button></div>'+
     '<div class="card" style="gap:12px"><h3>其他</h3>'+
       '<label class="f">服裝規定<input class="i" data-k="dress" value="'+esc(P.dress)+'" placeholder="全黑長褲、平底鞋"></label>'+
-      '<div class="grid2"><label class="f">供餐<input class="i" data-k="meal" value="'+esc(P.meal)+'" placeholder="晚餐便當／無"></label><label class="f">加保勞保<select class="i" data-k="insurance">'+opt(['會','不會','還不確定'],P.insurance)+'</select></label></div>'+
+      '<div class="grid2"><label class="f">供餐<input class="i" data-k="meal" value="'+esc(P.meal)+'" placeholder="晚餐便當／無"></label><label class="f">加保勞保<select class="i" data-k="insurance">'+opt(['有','無','還不確定'],P.insurance)+'</select></label></div>'+
       '<label class="f">發薪方式<select class="i" data-k="pay">'+opt(['當天現金','活動結束後 7 天內匯款','活動結束後 14 天內匯款','其他'],P.pay)+'</select></label>'+
       '<label class="f">注意事項<textarea class="i" data-k="notes">'+esc(P.notes)+'</textarea></label></div>'+
     '<button class="btn b full" id="p_go">送出刊登</button><p class="small muted" style="text-align:center">送出後我們會確認資料，通常 1 天內開放報名。</p></div>';
