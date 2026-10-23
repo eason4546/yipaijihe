@@ -215,9 +215,17 @@ window.addEventListener('hashchange',route);
 
 /* ========= 找工作 ========= */
 let JOBS=null, F={hall:'',city:''};
+function cacheJobs(j){ JOBS=j; try{ localStorage.setItem('ypjh_jobs',JSON.stringify(j)); }catch(e){} }
 async function jobsPage(){
-  if(!JOBS) loading();
-  try{ if(!JOBS) JOBS=(await api({a:'jobs'})).jobs; }catch(e){ $app.innerHTML=errBox(e,true); return; }
+  if(!JOBS){
+    let c=null; try{ c=JSON.parse(localStorage.getItem('ypjh_jobs')||'null'); }catch(e){}
+    if(c){ JOBS=c; renderJobs(); api({a:'jobs'}).then(function(r){ cacheJobs(r.jobs); if(/^#?\/?$/.test(location.hash.replace('#',''))) renderJobs(); }).catch(function(){}); return; }
+    loading();
+    try{ cacheJobs((await api({a:'jobs'})).jobs); }catch(e){ $app.innerHTML=errBox(e,true); return; }
+  }
+  renderJobs();
+}
+function renderJobs(){
   const cities=[...new Set(JOBS.map(function(j){return j.city;}))];
   const list=JOBS.filter(function(j){ return (!F.hall||j.hall===F.hall)&&(!F.city||j.city===F.city); });
   $app.innerHTML='<div class="page">'+
