@@ -608,7 +608,7 @@ async function managePage(pid,key){
   const cur=shifts.filter(function(s){return s.id===MG.shift;})[0]||{};
   const ppl=d.people.filter(function(p){return p.shift===MG.shift;});
   const order={'報名中':0,'已錄取':1,'遲到':2,'完成':3,'放鳥':4,'未錄取':5,'48小時前取消':6,'24小時內取消':6};
-  ppl.sort(function(a,b){ return (order[a.status]||9)-(order[b.status]||9); });
+  ppl.sort(function(a,b){ return (a.status in order?order[a.status]:9)-(b.status in order?order[b.status]:9); });
   const cnt=function(st){ return ppl.filter(function(p){return st.indexOf(p.status)>=0;}).length; };
   $app.innerHTML='<a class="back" href="#/boss">‹ 我的刊登</a><div class="page">'+
     '<div class="card"><div class="row between"><h1 style="font-size:20px;font-weight:900">'+esc(e.title)+'</h1>'+status(e.status)+'</div>'+
