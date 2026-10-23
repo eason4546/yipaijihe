@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="logo.png">
+<title>一拍即合</title>
+<meta name="description" content="一拍即合：活動、展場、燈會與水電油漆的按日工作媒合。互相合作　創造無間成就。">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --soft:#F6F7F9; --line:#E4E7EB; --ink:#1F2328; --muted:#5F6670;
+  --orange:#E8561C; --orange-soft:#FFF1E8; --orange-ink:#B83E0C;
+  --blue:#3E63DD; --blue-soft:#EEF2FD; --blue-ink:#2D4FC0;
+  --green:#1F8A4C; --green-soft:#E7F6EC; --red:#C62F2F; --red-soft:#FDECEC; --amber:#9A6700; --amber-soft:#FFF6D6;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-num:"DM Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171B; --soft:#1C2026; --line:#2C323A; --ink:#E8EAED; --muted:#A3AAB3;
+  --orange:#FF7A45; --orange-soft:#33211A; --orange-ink:#FFB08F;
+  --blue:#7C98FF; --blue-soft:#1C2540; --blue-ink:#A9BCFF;
+  --green:#4CC37E; --green-soft:#16291E; --red:#FF7B7B; --red-soft:#331B1B; --amber:#E8B84A; --amber-soft:#2E2715; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171B; --soft:#1C2026; --line:#2C323A; --ink:#E8EAED; --muted:#A3AAB3;
+  --orange:#FF7A45; --orange-soft:#33211A; --orange-ink:#FFB08F;
+  --blue:#7C98FF; --blue-soft:#1C2540; --blue-ink:#A9BCFF;
+  --green:#4CC37E; --green-soft:#16291E; --red:#FF7B7B; --red-soft:#331B1B; --amber:#E8B84A; --amber-soft:#2E2715; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--soft);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{margin:0;line-height:1.3;text-wrap:balance}
+p{margin:0}
+a{color:var(--blue-ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:6px}
+.num{font-family:var(--f-num)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--bg)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar{display:flex;align-items:center;gap:10px;min-height:56px}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
+.brand img{height:24px}
+.brand b{font-size:18px;font-weight:900;letter-spacing:.04em;display:block;line-height:1.1}
+.brand small{display:block;font-size:10.5px;color:var(--muted);letter-spacing:.06em}
+.bar .sw{margin-left:auto;font-size:13px;font-weight:700;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--ink);background:var(--bg)}
+.back{display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:var(--muted);font-size:14px;padding:12px 0 0}
+main{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.page{padding-top:16px;display:flex;flex-direction:column;gap:14px}
+.ph{display:flex;flex-direction:column;gap:4px;padding-top:6px}
+.ph h1{font-size:24px;font-weight:900}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+a.card{text-decoration:none;color:var(--ink)}
+a.card:active{transform:scale(.995)}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.between{justify-content:space-between}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 10px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.chip.o{background:var(--orange-soft);color:var(--orange-ink)}
+.chip.b{background:var(--blue-soft);color:var(--blue-ink)}
+.chip.g{background:var(--green-soft);color:var(--green)}
+.chip.r{background:var(--red-soft);color:var(--red)}
+.chip.a{background:var(--amber-soft);color:var(--amber)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:12px;font-weight:700;font-size:16px;border:0;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.o{background:var(--orange);color:#fff}
+.btn.b{background:var(--blue);color:#fff}
+.btn.g{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn.line{background:#06C755;color:#fff}
+.btn.sm{min-height:36px;padding:0 12px;font-size:14px;border-radius:10px}
+.btn.full{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btns .btn{flex:1 1 0}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700;min-width:0}
+label.f span.h{font-weight:400;color:var(--muted);font-size:13px}
+input.i,select.i,textarea.i{width:100%;min-height:48px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 12px;font-size:16px;font-weight:400}
+textarea.i{min-height:96px;resize:vertical}
+input.i:focus,select.i:focus,textarea.i:focus{outline:2px solid var(--blue);border-color:transparent}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:8px 14px;font-size:15px;cursor:pointer;min-height:40px}
+.pick[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;min-height:40px;font-weight:700;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.job h3{font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:14px;color:var(--muted)}
+.pay{font-family:var(--f-num);font-size:20px;color:var(--orange-ink)}
+.pay small{font-family:var(--f-body);font-size:13px;color:var(--muted);margin-left:2px}
+.kv{display:grid;grid-template-columns:88px minmax(0,1fr);gap:8px 12px;font-size:15px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.shift{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;align-items:center;gap:12px}
+.shift .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.shift .t b{font-size:16px}
+.date-h{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-top:4px}
+.stat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat div{background:var(--soft);border-radius:12px;padding:10px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--f-num);font-size:22px}
+.stat span{font-size:12px;color:var(--muted)}
+.big{font-family:var(--f-num);font-size:48px;line-height:1;letter-spacing:.06em}
+.empty{text-align:center;padding:32px 16px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.empty img{width:160px;height:auto}
+.person{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.person:first-of-type{border-top:0;padding-top:0}
+.stars{display:flex;gap:4px}
+.stars button{border:0;background:none;padding:4px;cursor:pointer;color:var(--line);font-size:30px;line-height:1}
+.stars button.on{color:#F5B301}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 10px;font-size:12px;text-decoration:none;color:var(--muted);font-weight:700}
+.tabs a svg{width:24px;height:24px}
+.tabs a.on{color:var(--orange)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:15px;z-index:30;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.spin{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:sp 1s linear infinite;margin:40px auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+.avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--soft)}
+.divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.steps{display:flex;gap:6px}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--orange)}
+.sub-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px}
+.sb{border:1px dashed var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+#print{display:none}
+@media print{
+  body{background:#fff;color:#000}
+  header,main,.tabs,.toast{display:none!important}
+  #print{display:block;font-size:12px}
+  #print table{width:100%;border-collapse:collapse;margin-bottom:18px}
+  #print th,#print td{border:1px solid #999;padding:6px;text-align:left;height:30px}
+  #print h2{font-size:16px;margin:10px 0 6px}
+}
+@media (max-width:420px){ .grid2{grid-template-columns:1fr} .kv{grid-template-columns:76px minmax(0,1fr)} }
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+  <a class="brand" href="index.html"><img src="logo.png" alt=""><span><b>一拍即合</b><small>互相合作　創造無間成就</small></span></a>
+  <a class="sw" id="sw" href="#/boss">我是雇主</a>
+</div></header>
+<main><div class="wrap" id="app"><div class="spin"></div></div></main>
+<nav class="tabs" id="tabs"><div class="wrap">
+  <a href="#/" data-t="jobs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>找工作</a>
+  <a href="#/checkin" data-t="checkin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>打卡</a>
+  <a href="#/boss" data-t="boss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>雇主</a>
+  <a href="#/me" data-t="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>我的</a>
+</div></nav>
+<div id="print"></div>
+
+<script>
+/* ========= 設定 ========= */
+const API = "";                 // Apps Script 網頁應用程式網址（/exec）
+const GOOGLE_CLIENT_ID = "";    // Google OAuth 用戶端 ID
+const LINE_CHANNEL_ID = "";     // LINE Login 頻道 ID
+const SITE = location.origin + location.pathname;
+
+const REGIONS=['台北','新北','基隆','桃園','新竹','苗栗','台中','彰化','南投','雲林','嘉義','台南','高雄','屏東','宜蘭','花蓮','台東'];
+const TIMES=['平日白天','平日晚上','週末白天','週末晚上','夜班（搭拆、撤場）'];
+const TYPES=['燈會','展場','演唱會、音樂祭','市集','導覽、接待','舞台搭拆','水電','油漆','木作','泥作','搬運','清潔'];
+
+/* ========= 狀態 ========= */
+let S={};
+try{ S=JSON.parse(localStorage.getItem('ypjh')||'{}')||{}; }catch(e){ S={}; }
+function save(){ try{ localStorage.setItem('ypjh',JSON.stringify(S)); }catch(e){} }
+const $app=document.getElementById('app');
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function money(n){ n=+n||0; return n.toLocaleString('en-US'); }
+function toast(m){ const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(function(){t.remove();},2600); }
+function todayStr(){ const d=new Date(Date.now()+8*3600e3); return d.toISOString().slice(0,10).replace(/-/g,'/'); }
+function wk(d){ const a=String(d).split('/'); if(a.length<3) return ''; const x=new Date(+a[0],a[1]-1,+a[2]); return '日一二三四五六'.charAt(x.getDay()); }
+function md(d){ const a=String(d).split('/'); return a.length<3?d:(+a[1])+'/'+(+a[2]); }
+function range(a,b){ return a===b||!b?md(a)+'（'+wk(a)+'）':md(a)+'－'+md(b); }
+
+async function api(p){
+  if(!API) throw new Error('系統設定中，請稍後再試');
+  const r=await fetch(API,{method:'POST',body:JSON.stringify(p)});
+  const j=await r.json();
+  if(!j.ok){ if(/重新登入|過期/.test(j.msg||'')){ delete S.worker; delete S.ident; save(); } throw new Error(j.msg||'發生錯誤'); }
+  return j;
+}
+function loading(){ $app.innerHTML='<div class="spin" role="status" aria-label="載入中"></div>'; }
+function errBox(e,retry){ return '<div class="card empty"><p>'+esc(e.message||e)+'</p>'+(retry?'<button class="btn g sm" onclick="route()">再試一次</button>':'')+'</div>'; }
+function status(s){
+  const m={'報名中':'a','已錄取':'b','完成':'g','遲到':'a','放鳥':'r','未錄取':'','24小時內取消':'r','48小時前取消':'','待審核':'a','招募中':'g','已結束':'','取消':''};
+  return '<span class="chip '+(m[s]||'')+'">'+esc(s)+'</span>';
+}
+function payText(s){ return '<span class="pay">$'+money(s.price)+'<small>/ '+(s.mode==='日薪'?'天':'時')+'</small></span>'; }
+
+/* ========= 路由 ========= */
+const routes=[
+  [/^\/?$/,jobsPage,'jobs'],[/^\/job\/(\w+)$/,jobPage,'jobs'],
+  [/^\/login$/,loginPage,'me'],[/^\/join$/,joinPage,'me'],[/^\/me$/,mePage,'me'],
+  [/^\/checkin$/,checkinPage,'checkin'],[/^\/review\/(\w+)$/,reviewPage,'me'],
+  [/^\/boss$/,bossPage,'boss'],[/^\/post$/,postPage,'boss'],[/^\/posted\/(\w+)\/(\w+)\/(\d+)$/,postedPage,'boss'],
+  [/^\/manage\/(\w+)\/(\w+)$/,managePage,'boss'],[/^\/rate\/(\w+)\/(\w+)\/(\w+)$/,ratePage,'boss']
+];
+function route(){
+  const h=decodeURIComponent(location.hash.replace(/^#/,'').split('?')[0]||'/');
+  for(const r of routes){
+    const m=h.match(r[0]);
+    if(m){
+      document.querySelectorAll('.tabs a').forEach(function(a){ a.classList.toggle('on',a.dataset.t===r[2]); });
+      document.getElementById('sw').style.display=r[2]==='boss'?'none':'';
+      window.scrollTo(0,0);
+      r[1].apply(null,m.slice(1)); return;
+    }
+  }
+  location.hash='#/';
+}
+function qs(k){ const q=location.hash.split('?')[1]||''; const m=q.match(new RegExp('(?:^|&)'+k+'=([^&]*)')); return m?decodeURIComponent(m[1]):''; }
+function go(h){ if(location.hash===h) route(); else location.hash=h; }
+window.addEventListener('hashchange',route);
+
+/* ========= 找工作 ========= */
+let JOBS=null, F={hall:'',city:''};
+async function jobsPage(){
+  if(!JOBS) loading();
+  try{ if(!JOBS) JOBS=(await api({a:'jobs'})).jobs; }catch(e){ $app.innerHTML=errBox(e,true); return; }
+  const cities=[...new Set(JOBS.map(function(j){return j.city;}))];
+  const list=JOBS.filter(function(j){ return (!F.hall||j.hall===F.hall)&&(!F.city||j.city===F.city); });
+  $app.innerHTML='<div class="page">'+
+    '<div class="ph"><h1>今天缺人，找個拍檔</h1><p class="muted">按日、按班的現場工作，看清楚再報名。</p></div>'+
+    '<div class="seg" role="group" aria-label="館別">'+['','活動館','工程館'].map(function(h){ return '<button aria-pressed="'+(F.hall===h)+'" data-h="'+h+'">'+(h||'全部')+'</button>'; }).join('')+'</div>'+
+    (cities.length>1?'<select class="i" id="city" aria-label="縣市"><option value="">全部縣市</option>'+cities.map(function(c){return '<option'+(F.city===c?' selected':'')+'>'+esc(c)+'</option>';}).join('')+'</select>':'')+
+    (list.length?list.map(jobCard).join(''):
+      '<div class="card empty"><img src="highfive.png" alt=""><h3>目前沒有開放中的班別</h3><p class="muted">先登錄，有適合你的班別會第一時間通知你。</p>'+(S.worker?'':'<a class="btn o" href="#/join">登錄當拍檔</a>')+'</div>')+
+    '</div>';
+  $app.querySelectorAll('.seg button').forEach(function(b){ b.onclick=function(){ F.hall=b.dataset.h; jobsPage(); }; });
+  const c=document.getElementById('city'); if(c) c.onchange=function(){ F.city=c.value; jobsPage(); };
+}
+function jobCard(j){
+  const left=j.shifts.reduce(function(a,s){ return a+Math.max(0,s.left||0); },0);
+  return '<a class="card job" href="#/job/'+j.id+'">'+
+    '<div class="row between"><div class="row">'+(j.hasRescue?'<span class="chip o">臨時救援</span>':'')+'<span class="chip '+(j.hall==='工程館'?'b':'')+'">'+esc(j.hall)+'</span></div>'+
+    (left?'<span class="chip g">還缺 <span class="num">'+left+'</span> 人</span>':'<span class="chip">已額滿</span>')+'</div>'+
+    '<h3>'+esc(j.title)+'</h3>'+
+    '<div class="meta"><span>'+esc(j.employer?j.employer.name:'')+(j.employer&&j.employer.verified?' ✓':'')+'</span><span>'+esc(j.city)+'・'+esc(j.place)+'</span><span>'+range(j.start,j.end)+'</span></div>'+
+    '<div class="row between"><span class="muted small">'+j.shifts.length+' 個班別</span><span class="pay">最高 $'+money(j.maxPay)+'</span></div></a>';
+}
+async function jobPage(pid){
+  let j=JOBS&&JOBS.filter(function(x){return x.id===pid;})[0];
+  if(!j){ loading(); try{ j=(await api({a:'jobs',id:pid})).jobs[0]; }catch(e){ $app.innerHTML=errBox(e,true); return; } }
+  if(!j){ $app.innerHTML='<a class="back" href="#/">‹ 返回</a>'+errBox('這檔活動已經結束或下架'); return; }
+  let mine={};
+  if(S.worker){ try{ (await api({a:'me',id:S.worker.id,token:S.worker.token})).list.forEach(function(x){ if(x.shift&&['24小時內取消','48小時前取消','未錄取'].indexOf(x.status)<0) mine[x.shift.id]=x.status; }); }catch(e){} }
+  const e=j.employer||{};
+  const byDate={}; j.shifts.forEach(function(s){ (byDate[s.date]=byDate[s.date]||[]).push(s); });
+  $app.innerHTML='<a class="back" href="#/">‹ 返回</a><div class="page">'+
+    '<div class="card"><div class="row">'+(j.hasRescue?'<span class="chip o">臨時救援</span>':'')+'<span class="chip">'+esc(j.hall)+'</span></div>'+
+    '<h1 style="font-size:22px;font-weight:900">'+esc(j.title)+'</h1>'+
+    '<div class="row"><b>'+esc(e.name)+'</b>'+(e.verified?'<span class="chip g">✓ 商工登記</span>':'')+'</div>'+
+    '<div class="stat"><div><b>'+(e.payRate===null||e.payRate===undefined?'—':Math.round(e.payRate*100)+'%')+'</b><span>準時發薪</span></div><div><b>'+(e.rating?(+e.rating).toFixed(1):'—')+'</b><span>平均評價</span></div><div><b>'+(e.posts||0)+'</b><span>刊登檔數</span></div></div></div>'+
+    '<div class="card"><dl class="kv">'+
+      '<dt>日期</dt><dd>'+range(j.start,j.end)+'</dd><dt>集合點</dt><dd>'+esc(j.city)+'・'+esc(j.place)+'</dd>'+
+      (j.dress?'<dt>服裝</dt><dd>'+esc(j.dress)+'</dd>':'')+(j.meal?'<dt>供餐</dt><dd>'+esc(j.meal)+'</dd>':'')+
+      (j.insurance?'<dt>勞保</dt><dd>'+esc(j.insurance)+'</dd>':'')+(j.pay?'<dt>發薪</dt><dd>'+esc(j.pay)+'</dd>':'')+
+      (j.notes?'<dt>注意事項</dt><dd style="white-space:pre-wrap">'+esc(j.notes)+'</dd>':'')+
+    '</dl></div>'+
+    '<div class="card"><h3>選班別報名</h3>'+Object.keys(byDate).sort().map(function(d){
+      return '<div class="date-h">'+md(d)+'（'+wk(d)+'）</div>'+byDate[d].map(function(s){
+        const st=mine[s.id], full=s.left!==null&&s.left<=0;
+        return '<div class="shift"><div class="t"><b>'+esc(s.role)+(s.rescue?' <span class="chip o">救援</span>':'')+'</b>'+
+          '<span class="muted small num">'+esc(s.start)+'－'+esc(s.end)+'　還缺 '+Math.max(0,s.left||0)+' / '+s.need+'</span>'+payText(s)+'</div>'+
+          (st?status(st):'<button class="btn o sm" data-apply="'+s.id+'"'+(full?' disabled':'')+'>'+(full?'額滿':'報名')+'</button>')+'</div>';
+      }).join('');
+    }).join('')+'</div>'+
+    (j.reviews&&j.reviews.length?'<div class="card"><h3>上過工的人怎麼說</h3>'+j.reviews.map(function(r){ return '<div class="person"><div class="row"><span style="color:#F5B301">'+'★'.repeat(Math.round(r.score||0))+'</span><span class="muted small">'+esc(r.date)+'</span></div><p>'+esc(r.text)+'</p></div>'; }).join('')+'</div>':'')+
+    '</div>';
+  $app.querySelectorAll('[data-apply]').forEach(function(b){ b.onclick=async function(){
+    if(!S.worker){ go('#/login?next='+encodeURIComponent('/job/'+pid)); return; }
+    b.disabled=true; b.textContent='送出中';
+    try{ await api({a:'apply',id:S.worker.id,token:S.worker.token,shift:b.dataset.apply}); toast('報名成功！雇主確認後會通知你'); JOBS=null; jobPage(pid); }
+    catch(e){ toast(e.message); b.disabled=false; b.textContent='報名'; }
+  }; });
+}
+
+/* ========= 登入 ========= */
+function socialButtons(next,role){
+  let h='';
+  if(LINE_CHANNEL_ID) h+='<button class="btn line full" id="lineBtn"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s6-3.5 8.2-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>用 LINE 登入</button>';
+  if(GOOGLE_CLIENT_ID) h+='<div id="gBtn" style="display:flex;justify-content:center;min-height:44px"></div>';
+  return h;
+}
+function bindSocial(next,role){
+  const lb=document.getElementById('lineBtn');
+  if(lb) lb.onclick=function(){
+    const st=Math.random().toString(36).slice(2);
+    try{ sessionStorage.setItem('ypjh_oauth',JSON.stringify({st:st,next:next,role:role})); }catch(e){}
+    location.href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id='+LINE_CHANNEL_ID+'&redirect_uri='+encodeURIComponent(SITE)+'&state='+st+'&scope=profile%20openid';
+  };
+  const g=document.getElementById('gBtn');
+  if(g&&GOOGLE_CLIENT_ID){
+    const init=function(){
+      google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:function(r){ finishOauth({provider:'google',credential:r.credential},next,role); }});
+      google.accounts.id.renderButton(g,{theme:'outline',size:'large',text:'signin_with',shape:'pill',width:Math.min(360,g.clientWidth||320),locale:'zh-TW'});
+    };
+    if(window.google&&google.accounts) init();
+    else{ const s=document.createElement('script'); s.src='https://accounts.google.com/gsi/client'; s.async=true; s.onload=init; document.head.appendChild(s); }
+  }
+}
+async function finishOauth(p,next,role){
+  loading();
+  try{
+    const r=await api(Object.assign({a:'oauth'},p));
+    S.ident=r.ident; S.profile=r.profile; if(r.worker) S.worker=r.worker; if(r.employer) S.employer=r.employer; save();
+    if(role==='boss') go('#'+(next||'/boss'));
+    else if(!r.worker) go('#/join?next='+encodeURIComponent(next||'/me'));
+    else{ toast('歡迎回來，'+r.worker.name); go('#'+(next||'/me')); }
+  }catch(e){ $app.innerHTML=errBox(e)+'<p style="text-align:center"><a href="#/login">回登入頁</a></p>'; }
+}
+function loginPage(){
+  const next=qs('next')||'/me';
+  $app.innerHTML='<div class="page"><div class="card" style="gap:16px;padding:24px 20px">'+
+    '<div style="text-align:center"><img src="highfive.png" alt="" style="width:150px"><h1 style="font-size:22px;font-weight:900;margin-top:6px">登入一拍即合</h1><p class="muted">登入後就能報名、打卡、看你的出勤信用</p></div>'+
+    socialButtons()+
+    ((LINE_CHANNEL_ID||GOOGLE_CLIENT_ID)?'<div class="divider">或用手機登入</div>':'')+
+    '<label class="f">手機<input class="i num" id="ph" inputmode="tel" autocomplete="tel" placeholder="0912345678"></label>'+
+    '<label class="f">4 位數登入碼<input class="i num" id="pin" inputmode="numeric" maxlength="4" type="password" autocomplete="current-password"></label>'+
+    '<button class="btn o full" id="go">登入</button>'+
+    '<p class="small muted" style="text-align:center">還沒登錄？<a href="#/join?next='+encodeURIComponent(next)+'">登錄當拍檔，一分鐘完成</a></p>'+
+    '</div></div>';
+  bindSocial(next,'worker');
+  document.getElementById('go').onclick=async function(){
+    const b=this; b.disabled=true;
+    try{ const r=await api({a:'login',phone:document.getElementById('ph').value,pin:document.getElementById('pin').value}); S.worker=r; save(); toast('歡迎回來，'+r.name); go('#'+next); }
+    catch(e){ toast(e.message); b.disabled=false; }
+  };
+}
+
+/* ========= 登錄 ========= */
+let J={step:1,times:[],types:[]};
+function joinPage(){
+  const next=qs('next')||'/me';
+  if(S.worker){ go('#'+next); return; }
+  if(S.profile&&!J.name) J.name=S.profile.name;
+  const viaSocial=!!S.ident;
+  const steps='<div class="steps">'+[1,2,3].map(function(i){return '<i class="'+(i<=J.step?'on':'')+'"></i>';}).join('')+'</div>';
+  let body='';
+  if(J.step===1){
+    body='<h2>先認識你</h2>'+
+      (!viaSocial&&(LINE_CHANNEL_ID||GOOGLE_CLIENT_ID)?'<p class="muted small">用 LINE 或 Google 登錄最快，不用記密碼：</p>'+socialButtons()+'<div class="divider">或直接填寫</div>':'')+
+      (viaSocial&&S.profile?'<div class="row">'+(S.profile.picture?'<img class="avatar" src="'+esc(S.profile.picture)+'" alt="">':'')+'<span class="muted small">已用 '+(S.profile.provider==='line'?'LINE':'Google')+' 登入</span></div>':'')+
+      '<label class="f">姓名<span class="h">雇主會看到，請填真實姓名</span><input class="i" id="j_name" value="'+esc(J.name||'')+'" autocomplete="name"></label>'+
+      '<label class="f">手機<span class="h">錄取後雇主才看得到</span><input class="i num" id="j_phone" inputmode="tel" value="'+esc(J.phone||'')+'" placeholder="0912345678" autocomplete="tel"></label>'+
+      (viaSocial?'':'<label class="f">設定 4 位數登入碼<input class="i num" id="j_pin" inputmode="numeric" maxlength="4" type="password" value="'+esc(J.pin||'')+'" autocomplete="new-password"></label>')+
+      '<label class="f">LINE 名稱<span class="h">方便雇主聯絡，可留空</span><input class="i" id="j_line" value="'+esc(J.line||'')+'"></label>';
+  }else if(J.step===2){
+    body='<h2>你想做什麼工作</h2>'+
+      '<label class="f">主要地區<select class="i" id="j_region"><option value="">請選擇</option>'+REGIONS.map(function(r){return '<option'+(J.region===r?' selected':'')+'>'+r+'</option>';}).join('')+'</select></label>'+
+      '<div class="f"><b style="font-size:14px">可以上班的時段</b><div class="picks" data-k="times">'+TIMES.map(function(t){return '<button class="pick" aria-pressed="'+(J.times.indexOf(t)>=0)+'">'+t+'</button>';}).join('')+'</div></div>'+
+      '<div class="f"><b style="font-size:14px">想做的工作</b><div class="picks" data-k="types">'+TYPES.map(function(t){return '<button class="pick" aria-pressed="'+(J.types.indexOf(t)>=0)+'">'+t+'</button>';}).join('')+'</div></div>';
+  }else{
+    body='<h2>最後一步</h2>'+
+      '<label class="f">證照或訓練<span class="h">例如：室內配線乙級、營造業安全衛生教育訓練</span><input class="i" id="j_cert" value="'+esc(J.cert||'')+'"></label>'+
+      '<label class="f">做過的活動或工作<textarea class="i" id="j_exp">'+esc(J.exp||'')+'</textarea></label>'+
+      '<div class="f"><b style="font-size:14px">年滿 18 歲嗎？</b><div class="seg" id="j_adult"><button aria-pressed="'+(J.adult===true)+'" data-v="1">是</button><button aria-pressed="'+(J.adult===false)+'" data-v="0">否</button></div><span class="small muted">未滿 18 歲不能報名搭拆、水電等危險性工作</span></div>'+
+      '<label class="row small" style="align-items:flex-start;gap:10px"><input type="checkbox" id="j_ok" style="width:20px;height:20px;margin-top:2px"'+(J.ok?' checked':'')+'><span>我同意一拍即合為了媒合工作使用以上資料，並遵守出勤信用規則。不會收集身分證字號或銀行帳號。</span></label>';
+  }
+  $app.innerHTML='<div class="page"><div class="ph"><h1>登錄當拍檔</h1><p class="muted">三步完成，之後一鍵報名</p></div>'+steps+
+    '<div class="card" style="gap:14px">'+body+'</div>'+
+    '<div class="btns">'+(J.step>1?'<button class="btn g" id="prev">上一步</button>':'')+'<button class="btn o" id="nextb">'+(J.step<3?'下一步':'完成登錄')+'</button></div>'+
+    (J.step===1&&!viaSocial?'<p class="small muted" style="text-align:center">已經登錄過？<a href="#/login?next='+encodeURIComponent(next)+'">登入</a></p>':'')+'</div>';
+  if(J.step===1&&!viaSocial) bindSocial(next,'worker');
+  $app.querySelectorAll('.picks').forEach(function(p){ p.querySelectorAll('.pick').forEach(function(b){ b.onclick=function(){ const arr=J[p.dataset.k], t=b.textContent, i=arr.indexOf(t); if(i>=0) arr.splice(i,1); else arr.push(t); b.setAttribute('aria-pressed',i<0); }; }); });
+  const ad=document.getElementById('j_adult'); if(ad) ad.querySelectorAll('button').forEach(function(b){ b.onclick=function(){ J.adult=b.dataset.v==='1'; ad.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);}); }; });
+  const val=function(id){ const el=document.getElementById(id); return el?el.value.trim():undefined; };
+  const keep=function(){ ['name','phone','pin','line','region','cert','exp'].forEach(function(k){ const v=val('j_'+k); if(v!==undefined) J[k]=v; }); const ok=document.getElementById('j_ok'); if(ok) J.ok=ok.checked; };
+  const pv=document.getElementById('prev'); if(pv) pv.onclick=function(){ keep(); J.step--; joinPage(); };
+  document.getElementById('nextb').onclick=async function(){
+    keep();
+    if(J.step===1){
+      const ph=(J.phone||'').replace(/\D/g,'');
+      if(!J.name) return toast('請填姓名');
+      if(!/^09\d{8}$/.test(ph)) return toast('請填 09 開頭的 10 碼手機');
+      if(!viaSocial&&!/^\d{4}$/.test(J.pin||'')) return toast('登入碼請設 4 位數字');
+    }
+    if(J.step===2){ if(!J.region) return toast('請選主要地區'); if(!J.times.length) return toast('請選至少一個時段'); if(!J.types.length) return toast('請選至少一種工作'); }
+    if(J.step<3){ J.step++; joinPage(); return; }
+    if(J.adult===undefined) return toast('請回答是否年滿 18 歲');
+    if(!J.ok) return toast('請勾選同意事項');
+    const b=this; b.disabled=true; b.textContent='送出中';
+    try{
+      const r=await api({a:'signup',ident:S.ident||'',name:J.name,phone:J.phone,pin:J.pin,line:J.line,region:J.region,times:J.times,types:J.types,cert:J.cert,exp:J.exp,adult:J.adult});
+      S.worker=r; save(); J={step:1,times:[],types:[]}; toast('登錄完成，歡迎加入！'); go('#'+next);
+    }catch(e){ toast(e.message); b.disabled=false; b.textContent='完成登錄'; }
+  };
+}
+
+/* ========= 我的 ========= */
+async function mePage(){
+  if(!S.worker){ go('#/login?next=/me'); return; }
+  loading();
+  let d; try{ d=await api({a:'me',id:S.worker.id,token:S.worker.token}); }catch(e){ $app.innerHTML=errBox(e,true); if(!S.worker) go('#/login?next=/me'); return; }
+  const w=d.worker, warn=/警告|暫停|待人工/.test(w.status);
+  $app.innerHTML='<div class="page">'+
+    '<div class="card"><div class="row">'+(S.profile&&S.profile.picture?'<img class="avatar" src="'+esc(S.profile.picture)+'" alt="">':'')+
+    '<div style="flex:1;min-width:0"><h1 style="font-size:20px;font-weight:900">'+esc(w.name)+'</h1><span class="muted small num">'+esc(w.id)+'・'+esc(w.region)+'</span></div>'+status(w.status==='正常'?'正常':w.status).replace('chip ','chip '+(warn?'r ':'g '))+'</div>'+
+    '<div class="stat"><div><b>'+esc(w.credit)+'</b><span>出勤信用</span></div><div><b>'+esc(w.done)+'</b><span>完成班數</span></div><div><b>'+d.list.filter(function(x){return x.status==='已錄取';}).length+'</b><span>待上班</span></div></div></div>'+
+    '<h3 style="margin-top:4px">我的報名</h3>'+
+    (d.list.length?d.list.map(function(x){
+      const s=x.shift||{}, e=x.event||{}, today=s.date===todayStr();
+      return '<div class="card"><div class="row between"><b>'+esc(e.title)+'</b>'+status(x.status)+'</div>'+
+        '<div class="meta"><span>'+esc(s.role)+'</span><span class="num">'+md(s.date||'')+'（'+wk(s.date||'')+'）'+esc(s.start)+'－'+esc(s.end)+'</span><span>'+esc(e.employer)+'</span></div>'+
+        (x.in||x.out?'<div class="meta num"><span>上班 '+esc(x.in||'—')+'</span><span>下班 '+esc(x.out||'—')+'</span>'+(x.hours?'<span>'+esc(x.hours)+' 小時</span>':'')+(+x.pay?'<span>應領 $'+money(x.pay)+'</span>':'')+'</div>':'')+
+        '<div class="btns">'+
+          (x.status==='已錄取'&&today?'<a class="btn o sm" href="#/checkin">去打卡</a>':'')+
+          (x.canReview?'<a class="btn b sm" href="#/review/'+x.record+'">評價雇主 +1 信用</a>':'')+
+          (x.status==='報名中'||x.status==='已錄取'?'<button class="btn g sm" data-cancel="'+x.record+'" data-st="'+x.status+'">取消</button>':'')+
+        '</div></div>';
+    }).join(''):'<div class="card empty"><p class="muted">還沒有報名紀錄</p><a class="btn o" href="#/">去找工作</a></div>')+
+    '<div class="card small muted">出勤信用：完成一班 +2、救援班 +3、遲到 −5、24 小時內取消 −10、放鳥 −20、寫評價 +1。</div>'+
+    '<button class="btn g" id="logout">登出</button></div>';
+  $app.querySelectorAll('[data-cancel]').forEach(function(b){ b.onclick=async function(){
+    if(b.dataset.st==='已錄取'&&!confirmBox(b,'開工前 24 小時內取消會扣 10 分，確定取消？')) return;
+    b.disabled=true;
+    try{ const r=await api({a:'cancel',id:S.worker.id,token:S.worker.token,record:b.dataset.cancel}); toast(r.status==='24小時內取消'?'已取消，扣 10 分':'已取消，不扣分'); mePage(); }
+    catch(e){ toast(e.message); b.disabled=false; }
+  }; });
+  document.getElementById('logout').onclick=function(){ S={}; save(); toast('已登出'); go('#/'); };
+}
+function confirmBox(b,msg){ if(b.dataset.sure) return true; b.dataset.sure='1'; b.textContent='再按一次確定'; toast(msg); setTimeout(function(){ delete b.dataset.sure; b.textContent='取消'; },4000); return false; }
+
+/* ========= 打卡 ========= */
+let CK={type:'上班'};
+async function checkinPage(){
+  if(!S.worker){ go('#/login?next=/checkin'); return; }
+  loading();
+  let d; try{ d=await api({a:'me',id:S.worker.id,token:S.worker.token}); }catch(e){ $app.innerHTML=errBox(e,true); return; }
+  const t=todayStr();
+  const list=d.list.filter(function(x){ return x.shift&&['已錄取','完成','遲到'].indexOf(x.status)>=0&&x.shift.date===t; });
+  if(!list.length){ $app.innerHTML='<div class="page"><div class="ph"><h1>到場打卡</h1></div><div class="card empty"><img src="highfive.png" alt=""><h3>今天沒有要上的班</h3><p class="muted">被錄取的班別，當天會出現在這裡。</p><a class="btn g" href="#/me">看我的報名</a></div></div>'; return; }
+  if(!CK.shift||!list.some(function(x){return x.shift.id===CK.shift;})) CK.shift=list[0].shift.id;
+  const cur=list.filter(function(x){return x.shift.id===CK.shift;})[0];
+  $app.innerHTML='<div class="page"><div class="ph"><h1>到場打卡</h1><p class="muted">到集合點後，輸入領班公布的 4 位數口令</p></div>'+
+    (list.length>1?'<select class="i" id="ck_s">'+list.map(function(x){return '<option value="'+x.shift.id+'"'+(x.shift.id===CK.shift?' selected':'')+'>'+esc(x.event.title)+'｜'+esc(x.shift.role)+' '+esc(x.shift.start)+'</option>';}).join('')+'</select>':'')+
+    '<div class="card" style="align-items:center;text-align:center;gap:14px;padding:24px 16px">'+
+      '<div><b>'+esc(cur.event.title)+'</b><div class="muted small">'+esc(cur.shift.role)+'・集合 <span class="num">'+esc(cur.shift.start)+'</span>・'+esc(cur.event.place)+'</div></div>'+
+      '<div class="big" id="clock">--:--</div>'+
+      '<div class="seg" style="width:100%" id="ck_t"><button aria-pressed="'+(CK.type==='上班')+'">上班</button><button aria-pressed="'+(CK.type==='下班')+'">下班</button></div>'+
+      '<input class="i num" id="ck_code" inputmode="numeric" maxlength="4" placeholder="現場口令" style="text-align:center;font-size:28px;letter-spacing:.3em;max-width:220px">'+
+      '<button class="btn o full" id="ck_go">'+CK.type+'打卡</button>'+
+      '<p class="small muted" id="ck_geo">打卡時會請你分享位置，只用來確認到場。</p>'+
+      '<div class="meta num" style="justify-content:center"><span>上班 '+esc(cur.in||'—')+'</span><span>下班 '+esc(cur.out||'—')+'</span></div>'+
+    '</div></div>';
+  const tick=function(){ const c=document.getElementById('clock'); if(!c) return clearInterval(CK.iv); c.textContent=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Taipei'}); };
+  clearInterval(CK.iv); tick(); CK.iv=setInterval(tick,5000);
+  const sel=document.getElementById('ck_s'); if(sel) sel.onchange=function(){ CK.shift=sel.value; checkinPage(); };
+  document.querySelectorAll('#ck_t button').forEach(function(b){ b.onclick=function(){ CK.type=b.textContent; document.querySelectorAll('#ck_t button').forEach(function(x){x.setAttribute('aria-pressed',x===b);}); document.getElementById('ck_go').textContent=CK.type+'打卡'; }; });
+  document.getElementById('ck_go').onclick=async function(){
+    const code=document.getElementById('ck_code').value.trim();
+    if(!/^\d{4}$/.test(code)) return toast('請輸入 4 位數口令');
+    const b=this; b.disabled=true; b.textContent='定位中…';
+    const pos=await new Promise(function(res){ if(!navigator.geolocation) return res(null); navigator.geolocation.getCurrentPosition(function(p){res(p.coords);},function(){res(null);},{enableHighAccuracy:true,timeout:8000,maximumAge:60000}); });
+    b.textContent='送出中…';
+    try{
+      const r=await api({a:'checkin',id:S.worker.id,token:S.worker.token,shift:CK.shift,type:CK.type,code:code,lat:pos&&pos.latitude,lng:pos&&pos.longitude,acc:pos&&pos.accuracy});
+      toast(CK.type+'打卡成功 '+r.time+(r.late>0?'（晚了 '+r.late+' 分鐘）':''));
+      if(CK.type==='上班') CK.type='下班';
+      checkinPage();
+    }catch(e){ toast(e.message); b.disabled=false; b.textContent=CK.type+'打卡'; }
+  };
+}
+
+/* ========= 評價 ========= */
+const ASPECTS=['好溝通','會互相 cover','現場有照顧人','準時'];
+function reviewForm(title,sub,onsend,blockLabel){
+  const sc=[0,0,0,0];
+  $app.innerHTML='<a class="back" href="javascript:history.back()">‹ 返回</a><div class="page"><div class="ph"><h1>'+esc(title)+'</h1><p class="muted">'+esc(sub)+'</p></div>'+
+    '<div class="card" style="gap:14px">'+ASPECTS.map(function(a,i){ return '<div class="row between"><b>'+a+'</b><div class="stars" data-i="'+i+'">'+[1,2,3,4,5].map(function(n){return '<button aria-label="'+n+' 顆星" data-n="'+n+'">★</button>';}).join('')+'</div></div>'; }).join('')+
+    '<label class="f">想對對方說的話<span class="h">匿名公開，雙方都評完或 7 天後才會顯示</span><textarea class="i" id="rv_c"></textarea></label>'+
+    '<label class="row small" style="gap:10px"><input type="checkbox" id="rv_b" style="width:20px;height:20px"><span>'+esc(blockLabel)+'</span></label>'+
+    '<label class="f" id="rv_rw" hidden>屏蔽原因<span class="h">只有平台看得到，對方不會收到通知</span><input class="i" id="rv_r"></label>'+
+    '<button class="btn o full" id="rv_go">送出評價</button></div></div>';
+  $app.querySelectorAll('.stars').forEach(function(g){ g.querySelectorAll('button').forEach(function(b){ b.onclick=function(){ const i=+g.dataset.i, n=+b.dataset.n; sc[i]=n; g.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on',+x.dataset.n<=n); }); }; }); });
+  document.getElementById('rv_b').onchange=function(){ document.getElementById('rv_rw').hidden=!this.checked; };
+  document.getElementById('rv_go').onclick=async function(){
+    if(sc.some(function(x){return !x;})) return toast('四個項目都要給星星');
+    const b=this; b.disabled=true;
+    try{ await onsend({scores:sc,comment:document.getElementById('rv_c').value.trim(),block:document.getElementById('rv_b').checked,reason:document.getElementById('rv_r').value.trim()}); }
+    catch(e){ toast(e.message); b.disabled=false; }
+  };
+}
+function reviewPage(rec){
+  if(!S.worker){ go('#/login?next=/review/'+rec); return; }
+  reviewForm('評價這次的雇主','寫評價可以加出勤信用 1 分',async function(v){
+    await api(Object.assign({a:'review',as:'工讀生',id:S.worker.id,token:S.worker.token,record:rec},v));
+    toast('謝謝你的評價，信用 +1'); go('#/me');
+  },'以後不想再接這個雇主的工作（屏蔽）');
+}
+function ratePage(pid,key,rec){
+  reviewForm('評價這位拍檔','你的評價會幫其他雇主找到好拍檔',async function(v){
+    await api(Object.assign({a:'review',as:'雇主',key:key,record:rec},v));
+    toast('評價已送出'); go('#/manage/'+pid+'/'+key);
+  },'以後不想再遇到這位（屏蔽）');
+}
+
+/* ========= 雇主 ========= */
+async function bossPage(){
+  if(!S.ident){
+    $app.innerHTML='<div class="page"><div class="ph"><h1>找人手</h1><p class="muted">一檔活動或一個工地，刊登一次就好</p></div>'+
+      '<div class="card" style="gap:14px">'+
+        '<div class="grid2 small"><div class="sb"><b>現場點名</b><span class="muted">錄取、到場、遲到、放鳥一頁搞定</span></div><div class="sb"><b>臨時救援</b><span class="muted">當天缺人加價發班，信用好的人先看到</span></div><div class="sb"><b>簽到表</b><span class="muted">工時自動算，一鍵列印</span></div><div class="sb"><b>互評與屏蔽</b><span class="muted">看得到每位拍檔的出勤信用</span></div></div>'+
+        ((LINE_CHANNEL_ID||GOOGLE_CLIENT_ID)?'<p class="small muted">登入後可以在這裡管理所有刊登：</p>'+socialButtons()+'<div class="divider">或</div>':'')+
+        '<a class="btn b full" href="#/post">'+((LINE_CHANNEL_ID||GOOGLE_CLIENT_ID)?'不登入，直接刊登':'開始刊登')+'</a>'+
+        '<p class="small muted">測試期免費。不登入也能刊登，刊登後會給你一條專屬管理連結，請收好。</p>'+
+      '</div>'+myLinks()+'</div>';
+    bindSocial('/boss','boss'); return;
+  }
+  loading();
+  let d; try{ d=await api({a:'myEvents',ident:S.ident}); }catch(e){ $app.innerHTML=errBox(e,true); return; }
+  if(d.employer){ S.employer=d.employer; save(); }
+  $app.innerHTML='<div class="page"><div class="ph"><div class="row between"><h1>'+esc(d.employer?d.employer.name:'找人手')+'</h1><button class="btn g sm" id="out">登出</button></div><p class="muted">'+(d.employer?'你的所有刊登':'登入完成，刊登第一檔活動吧')+'</p></div>'+
+    '<a class="btn b full" href="#/post">＋ 刊登新活動</a>'+
+    d.events.map(function(e){
+      return '<a class="card" href="#/manage/'+e.id+'/'+e.key+'"><div class="row between"><b>'+esc(e.title)+'</b>'+status(e.status)+'</div>'+
+        '<div class="meta"><span>'+esc(e.city)+'</span><span>'+range(e.start,e.end)+'</span><span>'+e.shifts+' 個班別</span></div>'+
+        '<div class="row"><span class="chip g">已錄取 '+e.got+' / '+e.need+'</span>'+(e.pending?'<span class="chip a">'+e.pending+' 人等你回覆</span>':'')+'</div>'+
+        (e.status==='待審核'?'<p class="small muted">我們確認資料後就會開放報名，通常 1 天內。</p>':'')+'</a>';
+    }).join('')+myLinks(d.events)+'</div>';
+  document.getElementById('out').onclick=function(){ delete S.ident; delete S.employer; delete S.profile; save(); bossPage(); };
+}
+function myLinks(skip){
+  const ids=(skip||[]).map(function(e){return e.id;});
+  const l=(S.posted||[]).filter(function(p){ return ids.indexOf(p.pid)<0; });
+  if(!l.length) return '';
+  return '<h3>這支手機刊登過的</h3>'+l.map(function(p){ return '<a class="card" href="#/manage/'+p.pid+'/'+p.key+'"><b>'+esc(p.title)+'</b><span class="muted small">點進去管理報名和點名</span></a>'; }).join('');
+}
+
+let P=null;
+function blankShift(){ const last=P&&P.shifts.length?P.shifts[P.shifts.length-1]:null; return last?Object.assign({},last):{role:'',date:P?P.start:'',start:'09:00',end:'18:00',mode:'時薪',price:'',count:'',rescue:false,rescuePrice:''}; }
+function postPage(){
+  if(!P){ const e=S.employer||{}; P={company:e.name||'',type:e.type==='個人師傅'?'個人師傅':'公司',taxid:e.taxid||'',contact:e.contact||'',phone:e.phone||'',title:'',hall:'活動館',city:'',place:'',start:'',end:'',dress:'',meal:'',insurance:'會',pay:'活動結束後 7 天內匯款',notes:'',shifts:[]}; P.shifts.push(blankShift()); }
+  const isoD=function(d){ return String(d||'').replace(/\//g,'-'); };
+  const opt=function(arr,v){ return arr.map(function(x){return '<option'+(x===v?' selected':'')+'>'+x+'</option>';}).join(''); };
+  $app.innerHTML='<a class="back" href="#/boss">‹ 返回</a><div class="page"><div class="ph"><h1>刊登一檔活動</h1><p class="muted">所有職務和班別放在同一則</p></div>'+
+    '<div class="card" style="gap:12px"><h3>你是誰</h3>'+
+      '<div class="seg" id="p_type"><button aria-pressed="'+(P.type==='公司')+'">公司、商號</button><button aria-pressed="'+(P.type==='個人師傅')+'">個人師傅</button></div>'+
+      '<label class="f">公司或師傅名稱<input class="i" data-k="company" value="'+esc(P.company)+'"></label>'+
+      (P.type==='公司'?'<label class="f">統一編號<span class="h">我們會查經濟部商工登記，通過後顯示 ✓</span><input class="i num" data-k="taxid" inputmode="numeric" maxlength="8" value="'+esc(P.taxid)+'"></label>':'')+
+      '<div class="grid2"><label class="f">聯絡人<input class="i" data-k="contact" value="'+esc(P.contact)+'"></label><label class="f">手機<input class="i num" data-k="phone" inputmode="tel" value="'+esc(P.phone)+'"></label></div></div>'+
+    '<div class="card" style="gap:12px"><h3>活動資訊</h3>'+
+      '<div class="seg" id="p_hall"><button aria-pressed="'+(P.hall==='活動館')+'">活動館</button><button aria-pressed="'+(P.hall==='工程館')+'">工程館</button></div>'+
+      '<label class="f">活動或工程名稱<input class="i" data-k="title" value="'+esc(P.title)+'" placeholder="例：南方燈節 夜間場務"></label>'+
+      '<div class="grid2"><label class="f">縣市<select class="i" data-k="city"><option value="">請選擇</option>'+opt(REGIONS,P.city)+'</select></label><label class="f">集合點<input class="i" data-k="place" value="'+esc(P.place)+'" placeholder="工地可只寫行政區"></label></div>'+
+      '<div class="grid2"><label class="f">開始日<input class="i" type="date" data-k="start" value="'+isoD(P.start)+'"></label><label class="f">結束日<input class="i" type="date" data-k="end" value="'+isoD(P.end)+'"></label></div></div>'+
+    '<div class="card" style="gap:12px"><div class="row between"><h3>班別</h3><span class="muted small">'+P.shifts.length+' 個</span></div>'+
+      P.shifts.map(function(s,i){ return '<div class="sb" data-i="'+i+'">'+
+        '<div class="sub-row"><label class="f">職務<input class="i" data-s="role" value="'+esc(s.role)+'" placeholder="動線引導、水電小工…"></label><label class="f">日期<input class="i" type="date" data-s="date" value="'+isoD(s.date)+'"></label></div>'+
+        '<div class="grid2"><label class="f">集合<input class="i" type="time" data-s="start" value="'+esc(s.start)+'"></label><label class="f">下班<input class="i" type="time" data-s="end" value="'+esc(s.end)+'"></label></div>'+
+        '<div class="grid2"><label class="f">計薪<select class="i" data-s="mode">'+opt(['時薪','日薪'],s.mode)+'</select></label><label class="f">金額（元）<input class="i num" data-s="price" inputmode="numeric" value="'+esc(s.price)+'"></label></div>'+
+        '<div class="grid2"><label class="f">需要人數<input class="i num" data-s="count" inputmode="numeric" value="'+esc(s.count)+'"></label><label class="f">臨時救援<select class="i" data-s="rescue"><option value="">否</option><option value="1"'+(s.rescue?' selected':'')+'>是（加價）</option></select></label></div>'+
+        (s.rescue?'<label class="f">救援金額<span class="h">至少原價 × 1.2，系統會自動補足</span><input class="i num" data-s="rescuePrice" inputmode="numeric" value="'+esc(s.rescuePrice)+'"></label>':'')+
+        '<div class="btns"><button class="btn g sm" data-copy="'+i+'">複製這班</button>'+(P.shifts.length>1?'<button class="btn g sm" data-del="'+i+'">刪除</button>':'')+'</div></div>'; }).join('')+
+      '<button class="btn g" id="p_add">＋ 新增班別</button></div>'+
+    '<div class="card" style="gap:12px"><h3>其他</h3>'+
+      '<label class="f">服裝規定<input class="i" data-k="dress" value="'+esc(P.dress)+'" placeholder="全黑長褲、平底鞋"></label>'+
+      '<div class="grid2"><label class="f">供餐<input class="i" data-k="meal" value="'+esc(P.meal)+'" placeholder="晚餐便當／無"></label><label class="f">加保勞保<select class="i" data-k="insurance">'+opt(['會','不會','還不確定'],P.insurance)+'</select></label></div>'+
+      '<label class="f">發薪方式<select class="i" data-k="pay">'+opt(['當天現金','活動結束後 7 天內匯款','活動結束後 14 天內匯款','其他'],P.pay)+'</select></label>'+
+      '<label class="f">注意事項<textarea class="i" data-k="notes">'+esc(P.notes)+'</textarea></label></div>'+
+    '<button class="btn b full" id="p_go">送出刊登</button><p class="small muted" style="text-align:center">送出後我們會確認資料，通常 1 天內開放報名。</p></div>';
+  const sync=function(){
+    $app.querySelectorAll('[data-k]').forEach(function(el){ let v=el.value; if(el.type==='date') v=v.replace(/-/g,'/'); P[el.dataset.k]=v; });
+    $app.querySelectorAll('.sb[data-i]').forEach(function(box){ const s=P.shifts[+box.dataset.i]; box.querySelectorAll('[data-s]').forEach(function(el){ let v=el.value; if(el.type==='date') v=v.replace(/-/g,'/'); if(el.dataset.s==='rescue') v=!!v; s[el.dataset.s]=v; }); });
+  };
+  $app.querySelectorAll('[data-s="rescue"]').forEach(function(el){ el.onchange=function(){ sync(); postPage(); }; });
+  $app.querySelector('[data-k="start"]').onchange=function(){ sync(); P.shifts.forEach(function(s){ if(!s.date) s.date=P.start; }); if(!P.end) P.end=P.start; postPage(); };
+  document.querySelectorAll('#p_type button').forEach(function(b,i){ b.onclick=function(){ sync(); P.type=i?'個人師傅':'公司'; postPage(); }; });
+  document.querySelectorAll('#p_hall button').forEach(function(b,i){ b.onclick=function(){ sync(); P.hall=i?'工程館':'活動館'; postPage(); }; });
+  document.getElementById('p_add').onclick=function(){ sync(); P.shifts.push(blankShift()); postPage(); };
+  $app.querySelectorAll('[data-copy]').forEach(function(b){ b.onclick=function(){ sync(); P.shifts.splice(+b.dataset.copy+1,0,Object.assign({},P.shifts[+b.dataset.copy])); postPage(); }; });
+  $app.querySelectorAll('[data-del]').forEach(function(b){ b.onclick=function(){ sync(); P.shifts.splice(+b.dataset.del,1); postPage(); }; });
+  document.getElementById('p_go').onclick=async function(){
+    sync();
+    if(!P.company||!P.contact||!P.phone) return toast('請填名稱、聯絡人和手機');
+    if(!P.title||!P.city||!P.place||!P.start) return toast('請填活動名稱、縣市、集合點和開始日');
+    const bad=P.shifts.findIndex(function(s){ return !s.role||!s.date||!s.start||!s.end||!(+s.price>0)||!(+s.count>0); });
+    if(bad>=0) return toast('第 '+(bad+1)+' 個班別還沒填完整');
+    const b=this; b.disabled=true; b.textContent='送出中';
+    try{
+      const r=await api(Object.assign({a:'post',ident:S.ident||''},P));
+      S.posted=(S.posted||[]).concat([{pid:r.pid,key:r.key,title:P.title}]); save(); P=null;
+      go('#/posted/'+r.pid+'/'+r.key+'/'+r.code);
+    }catch(e){ toast(e.message); b.disabled=false; b.textContent='送出刊登'; }
+  };
+}
+function postedPage(pid,key,code){
+  const link=SITE+'#/manage/'+pid+'/'+key;
+  $app.innerHTML='<div class="page"><div class="card" style="align-items:center;text-align:center;gap:14px;padding:24px 18px">'+
+    '<img src="highfive.png" alt="" style="width:160px"><h1 style="font-size:22px;font-weight:900">刊登送出了！</h1>'+
+    '<p class="muted">我們確認資料後就會開放報名，通常 1 天內。</p>'+
+    '<div style="width:100%" class="sb"><b>現場打卡口令</b><div class="big">'+esc(code)+'</div><span class="small muted">活動當天公布給拍檔，到場輸入就能打卡</span></div>'+
+    '<div style="width:100%;text-align:left" class="sb"><b>專屬管理連結</b><span class="small muted">報名、錄取、點名、簽到表都在這裡。可以傳給現場領班。</span><input class="i small" readonly value="'+esc(link)+'" id="lk"><button class="btn b" id="cp">複製連結</button></div>'+
+    '<a class="btn g full" href="#/manage/'+pid+'/'+key+'">打開管理頁</a></div></div>';
+  document.getElementById('cp').onclick=function(){ const i=document.getElementById('lk'); i.select(); try{ navigator.clipboard.writeText(link).then(function(){toast('已複製');},function(){document.execCommand('copy');toast('已複製');}); }catch(e){ document.execCommand('copy'); toast('已複製'); } };
+}
+
+let MG={};
+async function managePage(pid,key){
+  if(MG.pid!==pid) MG={pid:pid,shift:''};
+  loading();
+  let d; try{ d=await api({a:'manage',pid:pid,key:key}); }catch(e){ $app.innerHTML=errBox(e,true); return; }
+  const e=d.event;
+  if(!(S.posted||[]).some(function(p){return p.pid===pid;})){ S.posted=(S.posted||[]).concat([{pid:pid,key:key,title:e.title}]); save(); }
+  const shifts=e.shifts;
+  if(!MG.shift||!shifts.some(function(s){return s.id===MG.shift;})){ const t=todayStr(); MG.shift=(shifts.filter(function(s){return s.date>=t;})[0]||shifts[0]||{}).id; }
+  const cur=shifts.filter(function(s){return s.id===MG.shift;})[0]||{};
+  const ppl=d.people.filter(function(p){return p.shift===MG.shift;});
+  const order={'報名中':0,'已錄取':1,'遲到':2,'完成':3,'放鳥':4,'未錄取':5,'48小時前取消':6,'24小時內取消':6};
+  ppl.sort(function(a,b){ return (order[a.status]||9)-(order[b.status]||9); });
+  const cnt=function(st){ return ppl.filter(function(p){return st.indexOf(p.status)>=0;}).length; };
+  $app.innerHTML='<a class="back" href="#/boss">‹ 我的刊登</a><div class="page">'+
+    '<div class="card"><div class="row between"><h1 style="font-size:20px;font-weight:900">'+esc(e.title)+'</h1>'+status(e.status)+'</div>'+
+    '<div class="meta"><span>'+esc(e.city)+'・'+esc(e.place)+'</span><span>'+range(e.start,e.end)+'</span></div>'+
+    '<div class="row between sb" style="flex-direction:row"><div><b>打卡口令</b><div class="small muted">當天公布給拍檔</div></div><div class="big" style="font-size:36px">'+esc(e.code)+'</div></div>'+
+    (e.status==='待審核'?'<p class="small muted">審核中：開放後拍檔才看得到這檔活動。</p>':'')+'</div>'+
+    (shifts.length>1?'<select class="i" id="mg_s" aria-label="班別">'+shifts.map(function(s){return '<option value="'+s.id+'"'+(s.id===MG.shift?' selected':'')+'>'+md(s.date)+'（'+wk(s.date)+'）'+esc(s.role)+' '+esc(s.start)+'</option>';}).join('')+'</select>':'')+
+    '<div class="card"><div class="row between"><div><b>'+esc(cur.role)+(cur.rescue?' <span class="chip o">救援</span>':'')+'</b><div class="muted small num">'+md(cur.date||'')+' '+esc(cur.start)+'－'+esc(cur.end)+'・$'+money(cur.price)+'/'+(cur.mode==='日薪'?'天':'時')+'</div></div><button class="btn g sm" id="mg_print">列印簽到表</button></div>'+
+    '<div class="stat"><div><b>'+cnt(['已錄取','完成','遲到','放鳥'])+'<small class="muted" style="font-size:13px">/'+cur.need+'</small></b><span>已錄取</span></div><div><b>'+cnt(['完成','遲到'])+'</b><span>已到場</span></div><div><b>'+cnt(['報名中'])+'</b><span>待回覆</span></div></div>'+
+    (ppl.length?ppl.map(person).join(''):'<p class="muted" style="text-align:center;padding:16px 0">還沒有人報名這個班別</p>')+'</div>'+
+    '<p class="small muted">狀態改完會自動算工時、應付金額和拍檔的出勤信用。</p></div>';
+  function person(p){
+    const acts={
+      '報名中':'<button class="btn b sm" data-st="已錄取">錄取</button><button class="btn g sm" data-st="未錄取">婉拒</button>',
+      '已錄取':'<button class="btn o sm" data-st="完成">到場</button><button class="btn g sm" data-st="遲到">遲到</button><button class="btn g sm" data-st="放鳥">沒來</button>',
+      '完成':(p.canReview?'<a class="btn b sm" href="#/rate/'+pid+'/'+key+'/'+p.record+'">評價</a>':'')+'<button class="btn g sm" data-st="已錄取">改回已錄取</button>',
+      '遲到':(p.canReview?'<a class="btn b sm" href="#/rate/'+pid+'/'+key+'/'+p.record+'">評價</a>':'')+'<button class="btn g sm" data-st="完成">改成準時</button>',
+      '放鳥':'<button class="btn g sm" data-st="已錄取">改回已錄取</button>',
+      '未錄取':'<button class="btn g sm" data-st="報名中">改回待回覆</button>'
+    }[p.status]||'';
+    const showT=['已錄取','完成','遲到'].indexOf(p.status)>=0;
+    return '<div class="person" data-r="'+p.record+'"><div class="row between"><div style="min-width:0"><b>'+esc(p.name)+'</b> <span class="muted small num">'+esc(p.worker)+'</span><div class="meta small"><span>信用 <b class="num">'+esc(p.credit)+'</b></span><span>完成 <span class="num">'+esc(p.done)+'</span> 班</span>'+(p.wstatus&&p.wstatus!=='正常'?'<span style="color:var(--red)">'+esc(p.wstatus)+'</span>':'')+'</div></div>'+status(p.status)+'</div>'+
+      (p.types||p.cert?'<div class="small muted">'+esc(p.types)+(p.cert?'｜'+esc(p.cert):'')+'</div>':'')+
+      (p.phone?'<div class="row small"><a href="tel:'+esc(p.phone.replace(/\D/g,''))+'">📞 '+esc(p.phone)+'</a>'+(p.line?'<span class="muted">LINE：'+esc(p.line)+'</span>':'')+'</div>':'')+
+      (showT?'<div class="grid2"><label class="f small">上班<input class="i" type="time" data-t="in" value="'+esc(p.in)+'"></label><label class="f small">下班<input class="i" type="time" data-t="out" value="'+esc(p.out)+'"></label></div>'+(p.hours?'<div class="small muted num">'+esc(p.hours)+' 小時・應付 $'+money(p.pay)+'</div>':''):'')+
+      (acts?'<div class="btns">'+acts+'</div>':'')+'</div>';
+  }
+  const ms=document.getElementById('mg_s'); if(ms) ms.onchange=function(){ MG.shift=ms.value; managePage(pid,key); };
+  const send=async function(rec,o,btn){ if(btn) btn.disabled=true; try{ await api(Object.assign({a:'setStatus',pid:pid,key:key,record:rec},o)); toast('已更新'); managePage(pid,key); }catch(err){ toast(err.message); if(btn) btn.disabled=false; } };
+  $app.querySelectorAll('.person').forEach(function(box){
+    const rec=box.dataset.r, p=ppl.filter(function(x){return x.record===rec;})[0];
+    box.querySelectorAll('[data-st]').forEach(function(b){ b.onclick=function(){ send(rec,{status:b.dataset.st},b); }; });
+    box.querySelectorAll('[data-t]').forEach(function(inp){ inp.onchange=function(){ const o={status:p.status}; o[inp.dataset.t]=inp.value; send(rec,o); }; });
+  });
+  document.getElementById('mg_print').onclick=function(){
+    const list=ppl.filter(function(p){ return ['已錄取','完成','遲到','放鳥'].indexOf(p.status)>=0; });
+    document.getElementById('print').innerHTML='<h2>一拍即合｜工作人員簽到表</h2><p>'+esc(e.title)+'　'+md(cur.date||'')+'（'+wk(cur.date||'')+'）'+esc(cur.role)+' '+esc(cur.start)+'－'+esc(cur.end)+'　主辦：'+esc(e.employer?e.employer.name:'')+'　集合點：'+esc(e.place)+'</p>'+
+      '<table><tr><th>#</th><th>編號</th><th>姓名</th><th>簽到</th><th>簽退</th><th>工時</th><th>狀態</th><th style="width:22%">簽名</th></tr>'+
+      list.map(function(p,i){ return '<tr><td>'+(i+1)+'</td><td>'+esc(p.worker)+'</td><td>'+esc(p.name)+'</td><td>'+esc(p.in)+'</td><td>'+esc(p.out)+'</td><td>'+esc(p.hours)+'</td><td>'+esc(p.status)+'</td><td></td></tr>'; }).join('')+
+      Array(Math.max(0,8-list.length)).fill('<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>').join('')+
+      '</table><p>現場負責人簽名：＿＿＿＿＿＿＿＿＿＿　　日期：＿＿＿＿＿＿</p>';
+    window.print();
+  };
+}
+
+/* ========= 啟動：處理 LINE 登入回來 ========= */
+(function boot(){
+  const u=new URL(location.href), code=u.searchParams.get('code'), st=u.searchParams.get('state');
+  if(code&&st){
+    let o={}; try{ o=JSON.parse(sessionStorage.getItem('ypjh_oauth')||'{}'); }catch(e){}
+    history.replaceState(null,'',SITE);
+    if(o.st===st){ finishOauth({provider:'line',code:code},o.next,o.role); return; }
+  }
+  route();
+})();
+</script>
+</body>
+</html>

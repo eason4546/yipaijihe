@@ -115,7 +115,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
           <a class="btn o" id="workerLink" href="#worker">我要找工作</a>
           <a class="btn b" id="employerLink" href="#employer">我要找人手</a>
         </div>
-        <p class="note">測試期全部免費。登錄後我們會用 LINE 通知你適合的班別。</p>
+        <p class="note">測試期全部免費。</p>
       </div>
       <figure><img src="highfive.png" alt="戴工作證的橘色拍檔和戴安全帽的藍色拍檔擊掌"></figure>
     </section>
@@ -147,22 +147,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
         <div class="side o">
           <h3>找工作的你</h3>
           <ol>
-            <li>填工讀生登錄表，加 LINE 好友</li>
-            <li>收到適合的班別通知，回覆報名</li>
+            <li>登錄當拍檔，一分鐘完成</li>
+            <li>看職缺、選班別，一鍵報名</li>
             <li>到場輸入現場口令打卡</li>
             <li>做完互相評價，累積出勤信用</li>
           </ol>
-          <a class="btn o" id="workerLink2" href="#worker">填工讀生登錄表</a>
+          <a class="btn o" id="workerLink2" href="#worker">登錄當拍檔</a>
         </div>
         <div class="side b">
           <h3>找人手的你</h3>
           <ol>
-            <li>一檔活動或一個工地填一次刊登表</li>
-            <li>我們推薦合適、信用好的人選</li>
+            <li>一檔活動或一個工地刊登一次</li>
+            <li>看報名者的出勤信用，按一下錄取</li>
             <li>當天看點名，臨時缺人發救援班</li>
             <li>結束拿簽到表和勞報單，互相評價</li>
           </ol>
-          <a class="btn b" id="employerLink2" href="#employer">填雇主刊登表</a>
+          <a class="btn b" id="employerLink2" href="#employer">刊登活動</a>
         </div>
       </div>
     </section>
@@ -198,19 +198,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
 </footer>
 
 <script>
-/* 表單連結：執行建立工具後，把「說明」分頁最下面的填寫連結貼到這裡 */
+/* 連結設定 */
 const LINKS = {
-  worker: "https://docs.google.com/forms/d/e/1FAIpQLSdPRJfgPYAKxglavidj4-GBjhognYo3Y-0x6LJeOALt4Af8sQ/viewform",
-  employer: "https://docs.google.com/forms/d/e/1FAIpQLScalLkQE00WgPdnDFlUXLwFpjVBqA5_uS5pvxB4KsjSKJnLmQ/viewform",
+  worker: "app.html#/",
+  employer: "app.html#/boss",
   line: "在這裡貼LINE官方帳號連結"
 };
 function setLink(id, url){
   const a = document.getElementById(id);
   if (!a) return;
-  if (url && url.indexOf("http") === 0) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
+  if (!url || url.indexOf("在這裡") === 0) return;
+  a.href = url;
+  if (url.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
 }
-["workerLink","workerLink2"].forEach(function(id){ setLink(id, LINKS.worker); });
-["employerLink","employerLink2"].forEach(function(id){ setLink(id, LINKS.employer); });
+setLink("workerLink", LINKS.worker); setLink("workerLink2", "app.html#/join");
+setLink("employerLink", LINKS.employer); setLink("employerLink2", "app.html#/post");
 ["lineLink","lineLink2"].forEach(function(id){ setLink(id, LINKS.line); });
 </script>
 
