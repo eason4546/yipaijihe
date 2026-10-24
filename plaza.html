@@ -15,7 +15,7 @@
   --blue:#3E63DD; --blue-soft:#EEF2FD; --blue-ink:#2D4FC0;
   --green:#1F8A4C; --green-soft:#E7F6EC; --red:#C62F2F; --red-soft:#FDECEC; --amber:#9A6700; --amber-soft:#FFF6D6;
   --grass:#CBE5B0; --grass2:#BBDB9C; --grass3:#DCEFC6; --path:#EFE2C6; --path-edge:#D9C59E; --path-dot:#E3D2AE;
-  --wood:#7A4A2C; --paper:#FFF8E8; --paper-ink:#5A3A22; --plate:#8A5634; --plate-ink:#FFF4E2;
+  --tint:rgba(255,252,235,.16); --wood:#7A4A2C; --paper:#FFF8E8; --paper-ink:#5A3A22; --plate:#8A5634; --plate-ink:#FFF4E2;
   --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   --f-num:"DM Mono",ui-monospace,monospace;
 }
@@ -25,14 +25,14 @@
   --blue:#7C98FF; --blue-soft:#1C2540; --blue-ink:#A9BCFF;
   --green:#4CC37E; --green-soft:#16291E; --red:#FF7B7B; --red-soft:#331B1B; --amber:#E8B84A; --amber-soft:#2E2715;
   --grass:#25362A; --grass2:#21302A; --grass3:#2C4031; --path:#4A4234; --path-edge:#3A3328; --path-dot:#544A3A;
-  --paper:#FFF3DA; --plate:#6B4128; color-scheme:dark}}
+  --paper:#FFF3DA; --plate:#6B4128; --tint:rgba(10,18,40,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#14171B; --soft:#1C2026; --line:#2C323A; --ink:#E8EAED; --muted:#A3AAB3;
   --orange:#FF7A45; --orange-soft:#33211A; --orange-ink:#FFB08F;
   --blue:#7C98FF; --blue-soft:#1C2540; --blue-ink:#A9BCFF;
   --green:#4CC37E; --green-soft:#16291E; --red:#FF7B7B; --red-soft:#331B1B; --amber:#E8B84A; --amber-soft:#2E2715;
   --grass:#25362A; --grass2:#21302A; --grass3:#2C4031; --path:#4A4234; --path-edge:#3A3328; --path-dot:#544A3A;
-  --paper:#FFF3DA; --plate:#6B4128; color-scheme:dark}
+  --paper:#FFF3DA; --plate:#6B4128; --tint:rgba(10,18,40,.6); color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--grass);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
@@ -56,12 +56,10 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .listbtn{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:39;display:flex;align-items:center;gap:6px;height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 
 /* ---------- world ---------- */
-.field{position:relative;min-height:100vh;background:
-  radial-gradient(60% 30% at 20% 12%,var(--grass3),transparent 70%),
-  radial-gradient(50% 25% at 85% 45%,var(--grass3),transparent 70%),
-  radial-gradient(55% 25% at 15% 80%,var(--grass2),transparent 70%),var(--grass)}
+.field{position:relative;min-height:100vh;background:linear-gradient(var(--tint),var(--tint)),url(plaza/ground.webp) 0 0/300px 300px repeat,var(--grass)}
 #world{position:relative;z-index:0;isolation:isolate;container-type:inline-size;width:100%;max-width:560px;margin:0 auto;overflow:hidden}
-#world .grain{position:absolute;inset:0;background-image:radial-gradient(rgba(70,110,40,.13) 1.2px,transparent 1.3px);background-size:22px 22px;pointer-events:none}
+#world .vig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(30,60,20,.18),transparent 12%,transparent 88%,rgba(30,60,20,.18))}
+.gate .gsign{position:absolute;display:flex;align-items:center;justify-content:center;font-weight:900;color:#5A3A22;letter-spacing:.12em;white-space:nowrap;font-size:3.4cqw;line-height:1}
 #path{position:absolute;left:0;top:0;width:100cqw;pointer-events:none}
 .it{position:absolute;transform:translate(-50%,-100%);pointer-events:none}
 .it img{display:block;width:100%;height:auto;-webkit-user-drag:none;user-select:none}
@@ -79,8 +77,8 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 .board{pointer-events:auto;cursor:pointer}
 .board .pp{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--paper-ink);text-align:center;line-height:1.05}
-.board .pp b{font:900 clamp(16px,6cqw,30px)/1 var(--f-num)}
-.board .pp span{font-size:clamp(9px,2.6cqw,13px);font-weight:900;margin-top:3px}
+.board .pp b{font:900 clamp(14px,5.2cqw,26px)/1 var(--f-num)}
+.board .pp span{font-size:clamp(8px,2.2cqw,12px);font-weight:900;margin-top:3px;white-space:nowrap}
 .board .ttl{position:absolute;left:50%;top:-2%;transform:translate(-50%,-100%);white-space:nowrap;font-weight:900;font-size:clamp(13px,4cqw,18px);color:var(--ink);background:var(--bg);border-radius:999px;padding:2px 12px;box-shadow:0 4px 10px rgba(40,40,20,.15)}
 .lant img{animation:sway 3.2s ease-in-out infinite;transform-origin:50% 8%}
 @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
@@ -169,7 +167,7 @@ table.t th{font-size:12px;color:var(--muted);font-weight:700}
   <button class="ib" id="btnMe" aria-label="我的拍檔名帖"><img src="plaza/walker_o.webp" alt=""><span class="lv" id="meLv">1</span></button>
 </div>
 <div class="demo" id="demoTag" hidden>示範資料：正式職缺上架後會自動換成真的</div>
-<div class="field"><div id="world"><div class="grain"></div></div></div>
+<div class="field"><div id="world"><div class="vig"></div></div></div>
 <a class="listbtn" href="app.html">用清單看職缺</a>
 <div class="sky" id="sky" aria-hidden="true"></div>
 <div class="loading" id="loading"><img src="plaza/walker_b.webp" alt="載入中"></div>
@@ -265,7 +263,13 @@ function build(){
   var R=rnd(7);
   /* 告示榜：今天有多少任務 */
   var nShift=0,nHot=0;EMPS.forEach(function(g){nShift+=g.shifts.length;g.shifts.forEach(function(s){if(s.rescue)nHot++;});});
-  var bw=50,bx=50,by=30+bw*1.0444;
+  /* 入口牌樓 */
+  var gw=60,gy=22+gw*0.9927;
+  el('gate',50,gy,gw,'<img src="plaza/gate.webp" alt=""><span class="gsign" style="left:30%;top:39%;width:28%;height:13%">招募廣場</span>');
+  el('',7,gy-3,15,'<img src="plaza/bamboo.webp" alt="">');
+  el('',94,gy-1,14,'<img src="plaza/bamboo.webp" alt="" style="transform:scaleX(-1)">');
+  /* 告示榜：今天有多少任務 */
+  var bw=42,bx=27,by=gy+12+bw*1.0444;
   var b=el('board',bx,by,bw,'<img src="plaza/board.webp" alt="">'+
     '<span class="ttl">今日任務榜</span>'+
     '<div class="pp" style="left:21.7%;top:39%;width:16%;height:30%"><b>'+nShift+'</b><span>任務</span></div>'+
@@ -273,10 +277,12 @@ function build(){
     '<div class="pp" style="left:60%;top:39%;width:17.8%;height:30%"><b>'+EMPS.length+'</b><span>招募處</span></div>');
   b.setAttribute('role','button');b.tabIndex=0;b.setAttribute('aria-label','今日任務榜，看遊戲規則');
   b.onclick=showRules;b.onkeydown=function(e){if(e.key==='Enter')showRules();};
-  el('',bx-bw/2-7,by-1,15,'<img src="plaza/flowers.webp" alt="">');
-  el('',bx+bw/2+8,by-2,13,'<img src="plaza/flowers.webp" alt="" style="transform:scaleX(-1)">');
+  el('',bx-bw/2+2,by+1,12,'<img src="plaza/flowers.webp" alt="">');
+  el('',82,by-6,30,'<img src="plaza/sakura.webp" alt="">');
+  el('',93,by+2,12,'<img src="plaza/rocks.webp" alt="">');
   /* 招募處沿著小路左右排 */
-  var pts=[[50,by+4]],cur=by+10,i;
+  var pts=[[50,gy-3],[50,gy+8]],cur=by+6,i;
+  var DECO=['sakura','tree','pond','bamboo','tree','sakura','bamboo','pond'];
   EMPS.forEach(function(g,i){
     var T=TIERS[g.tier],w=T.w,h=w*T.ar,left=i%2===0;
     var cx=left?w/2+4:100-w/2-4,top=cur+9,bottom=top+h;
@@ -298,15 +304,24 @@ function build(){
     d.onclick=function(){showEmp(g);};d.onkeydown=function(e){if(e.key==='Enter')showEmp(g);};
     /* 小路經過招募處另一側 */
     pts.push([left?75:25,bottom-h*0.28]);
-    /* 裝飾：樹、木箱、石燈籠 */
-    el('',left?92:8,bottom-h*0.55,15+R()*4,'<img src="plaza/tree.webp" alt="">');
+    /* 裝飾：路旁的樹、櫻花、竹林、錦鯉池，加上木箱、柵欄、石頭 */
+    var dk=DECO[i%DECO.length],ex=left?93:7;
+    if(dk==='pond') el('',left?95:5,bottom-h*0.3,36,'<img src="plaza/pond.webp" alt=""'+(left?'':' style="transform:scaleX(-1)"')+'>');
+    else if(dk==='bamboo') el('',ex,bottom-h*0.45,13,'<img src="plaza/bamboo.webp" alt="">');
+    else if(dk==='sakura') el('',ex,bottom-h*0.5,24,'<img src="plaza/sakura.webp" alt="">');
+    else el('',ex,bottom-h*0.55,17+R()*3,'<img src="plaza/tree.webp" alt="">');
+    if(dk!=='pond') el('',left?96:4,bottom+5,11,'<img src="plaza/rocks.webp" alt="">');
+    if(i%3===1) el('',left?Math.max(6,cx-w*0.55):Math.min(94,cx+w*0.55),bottom-h*0.12,14,'<img src="plaza/fence.webp" alt="">');
     if(i%2===1) el('',left?cx+w*0.42:cx-w*0.42,bottom+1,11,'<img src="plaza/crates.webp" alt="">');
     el('lant',left?60:40,bottom-h*0.1,7,'<img src="plaza/lantern.webp" alt="">');
     if(R()>.4) el('',left?cx-w*0.55:cx+w*0.5,bottom-2,9,'<img src="plaza/flowers.webp" alt="">');
     cur=bottom+15-h*0.3;
   });
-  worldH=cur+30;
-  pts.push([50,worldH-6]);
+  worldH=cur+40;
+  pts.push([50,worldH-16]);
+  el('',50,worldH-4,30,'<img src="plaza/bridge.webp" alt="">');
+  el('',22,worldH-6,22,'<img src="plaza/sakura.webp" alt="">');
+  el('',80,worldH-8,16,'<img src="plaza/bamboo.webp" alt="">');
   W.style.height=worldH+'cqw';
   /* 石板小路（SVG，1 單位 = 1cqw） */
   var dpath='M'+pts[0][0]+' '+pts[0][1];
