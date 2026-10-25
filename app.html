@@ -137,6 +137,7 @@ input.i:focus,select.i:focus,textarea.i:focus{outline:2px solid var(--blue);bord
 </head>
 <body>
 <script src="splash.js"></script>
+<script src="plaza-card.js"></script>
 <header><div class="wrap bar">
   <a class="brand" href="index.html"><img src="logo.png" alt=""><span><b>一拍即合</b><small>互相合作　創造無間成就</small></span></a>
   <a class="sw" id="sw" href="#/boss">我是雇主</a>
@@ -231,11 +232,13 @@ function renderJobs(){
   const list=JOBS.filter(function(j){ return (!F.hall||j.hall===F.hall)&&(!F.city||j.city===F.city); });
   $app.innerHTML='<div class="page">'+
     '<div class="ph"><h1>今天缺人，找個拍檔</h1><p class="muted">按日、按班的現場工作，看清楚再報名。</p></div>'+
+    '<a class="pz wide" href="plaza.html" data-plaza-card data-sub></a>'+
     '<div class="seg" role="group" aria-label="館別">'+['','活動館','工程館'].map(function(h){ return '<button aria-pressed="'+(F.hall===h)+'" data-h="'+h+'">'+(h||'全部')+'</button>'; }).join('')+'</div>'+
     (cities.length>1?'<select class="i" id="city" aria-label="縣市"><option value="">全部縣市</option>'+cities.map(function(c){return '<option'+(F.city===c?' selected':'')+'>'+esc(c)+'</option>';}).join('')+'</select>':'')+
     (list.length?list.map(jobCard).join(''):
       '<div class="card empty"><img src="highfive.png" alt=""><h3>目前沒有開放中的班別</h3><p class="muted">先登錄，有適合你的班別會第一時間通知你。</p>'+(S.worker?'':'<a class="btn o" href="#/join">登錄當拍檔</a>')+'</div>')+
     '</div>';
+  if(window.PlazaCard) PlazaCard.mount($app);
   $app.querySelectorAll('.seg button').forEach(function(b){ b.onclick=function(){ F.hall=b.dataset.h; jobsPage(); }; });
   const c=document.getElementById('city'); if(c) c.onchange=function(){ F.city=c.value; jobsPage(); };
 }
