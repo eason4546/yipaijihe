@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="logo.png">
+<title>勞報單範本、簽到表範本免費下載｜一拍即合</title>
+<meta name="description" content="活動、展場、燈會、工程常用的勞務報酬單（勞報單）和工作人員簽到表範本。可以線上填好直接列印 A4，也可以免費下載 Excel，工時和實付金額自動計算。">
+<meta property="og:title" content="勞報單範本、簽到表範本免費下載｜一拍即合">
+<meta property="og:description" content="線上填好直接列印，或下載 Excel。工時、實付金額自動算。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --soft:#F6F7F9; --line:#E4E7EB; --ink:#1F2328; --muted:#5F6670;
+  --orange:#E8561C; --orange-soft:#FFF1E8; --orange-ink:#B83E0C;
+  --blue:#3E63DD; --blue-soft:#EEF2FD; --blue-ink:#2D4FC0;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-num:"DM Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171B; --soft:#1C2026; --line:#2C323A; --ink:#E8EAED; --muted:#A3AAB3;
+  --orange:#FF7A45; --orange-soft:#33211A; --orange-ink:#FFB08F;
+  --blue:#7C98FF; --blue-soft:#1C2540; --blue-ink:#A9BCFF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171B; --soft:#1C2026; --line:#2C323A; --ink:#E8EAED; --muted:#A3AAB3;
+  --orange:#FF7A45; --orange-soft:#33211A; --orange-ink:#FFB08F;
+  --blue:#7C98FF; --blue-soft:#1C2540; --blue-ink:#A9BCFF; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;line-height:1.3;text-wrap:balance}
+p{margin:0}
+a{color:var(--blue-ink)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:6px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:10px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand img{height:26px;width:auto}
+.brand b{font-size:19px;letter-spacing:.04em;font-weight:900;display:block;line-height:1.1}
+.brand small{display:block;font-size:11px;color:var(--muted);letter-spacing:.06em}
+.bar .go{margin-left:auto;font-size:14px;font-weight:700;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+main{padding-block:32px 56px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--orange-ink)}
+h1{font-size:clamp(28px,5vw,44px);font-weight:900;margin-top:8px}
+.lead{font-size:17px;color:var(--muted);margin-top:12px;max-width:38em}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:28px}
+.card{border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.card h2{font-size:22px;font-weight:900}
+.card .desc{color:var(--muted);font-size:15px}
+.thumb{border:1px solid var(--line);border-radius:10px;background:var(--soft);padding:10px;overflow:hidden}
+.thumb table{width:100%;border-collapse:collapse;font-size:11px;color:var(--muted);background:var(--bg)}
+.thumb th,.thumb td{border:1px solid var(--line);padding:3px 4px;text-align:center;height:18px}
+.thumb th{font-weight:700;color:var(--ink)}
+.thumb .t{font-size:12px;font-weight:900;color:var(--ink);margin-bottom:6px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700;min-width:0}
+label.f input,label.f select{width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:8px 10px;font-size:16px;font-weight:400}
+label.f input:focus,label.f select:focus{outline:2px solid var(--blue);border-color:transparent}
+.hint{font-size:12.5px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;flex:1 1 160px}
+.btn.o{background:var(--orange);color:#fff}
+.btn.b{background:var(--blue);color:#fff}
+.btn.g{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.05)}
+.cta{margin-top:20px;background:var(--blue-soft);border-radius:16px;padding:22px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.cta h2{font-size:20px;font-weight:900}
+.cta p{color:var(--muted);margin-top:4px;max-width:36em}
+.cta .btn{flex:0 0 auto}
+.notes{margin-top:36px}
+.notes h2{font-size:22px;font-weight:900;margin-bottom:12px}
+.notes ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;color:var(--ink)}
+.notes li span{color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:24px 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+#print{display:none}
+@media (max-width:820px){ .grid{grid-template-columns:1fr} }
+@media (max-width:420px){ .fields{grid-template-columns:1fr} }
+/* 列印 */
+@media print{
+  html,body{background:#fff!important;color:#000!important}
+  header,main,footer{display:none!important}
+  #print{display:block;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:#000}
+  #print table{width:100%;border-collapse:collapse}
+  #print th,#print td{border:1px solid #555;padding:4px 6px;font-size:11pt;vertical-align:middle}
+  #print th{background:#eee;font-weight:700}
+  .ps h1{font-size:17pt;text-align:center;margin:0 0 6px}
+  .ps .info{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #555;border-bottom:0;margin-bottom:0}
+  .ps .info div{border-bottom:1px solid #555;padding:5px 8px;font-size:10.5pt;min-height:26px}
+  .ps .info div+div{border-left:1px solid #555}
+  .ps .info div:nth-child(3n+1){border-left:0}
+  .ps td{text-align:center;padding:1px 6px!important;font-size:10pt!important}
+  .ps .foot{display:flex;justify-content:space-between;margin-top:10px;font-size:11pt}
+  .ps .brandline{font-size:8.5pt;color:#666;margin-top:6px}
+  .rc{height:136mm;padding:2mm 0;page-break-inside:avoid;display:flex;flex-direction:column}
+  .rc+.rc{border-top:1px dashed #888;padding-top:5mm}
+  .rc h1{font-size:15pt;text-align:center;margin:0 0 4px}
+  .rc th{width:16%;font-size:10pt!important}
+  .rc td{font-size:10.5pt!important;height:9.5mm}
+  .rc .amt th,.rc .amt td{text-align:center;width:auto}
+  .rc .sm{font-size:8.5pt;color:#555;margin-top:3px}
+  .pb{page-break-after:always}
+}
+</style>
+<style id="pagesize">@page{size:A4 portrait;margin:12mm}</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html"><img src="logo.png" alt=""><span><b>一拍即合</b><small>互相合作　創造無間成就</small></span></a>
+    <a class="go" href="app.html">找工作・找人手</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="eyebrow">免費範本</div>
+    <h1>勞報單、簽到表範本</h1>
+    <p class="lead">活動、展場、燈會、工程最常用的兩張表。可以在這裡填好直接列印 A4，也可以下載 Excel 自己改，工時和實付金額會自動算好。</p>
+
+    <div class="grid">
+      <section class="card" aria-labelledby="h-sign">
+        <h2 id="h-sign">工作人員簽到表</h2>
+        <p class="desc">現場點名、簽到簽退、算工時用。A4 橫式，一張可以排 10 到 20 人。</p>
+        <div class="thumb" aria-hidden="true">
+          <div class="t">一拍即合｜工作人員簽到表</div>
+          <table><tr><th>序號</th><th>姓名</th><th>簽到</th><th>簽退</th><th>工時</th><th>簽名</th></tr>
+          <tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr></table>
+        </div>
+        <div class="fields">
+          <label class="f">活動名稱<input id="s_event" placeholder="例如：冬季燈會"></label>
+          <label class="f">日期<input id="s_date" placeholder="例如：2026/12/31"></label>
+          <label class="f">職務<input id="s_role" placeholder="例如：入場引導"></label>
+          <label class="f">表定時間<input id="s_time" placeholder="例如：17:00－23:00"></label>
+          <label class="f">主辦單位<input id="s_org"></label>
+          <label class="f">集合點<input id="s_place"></label>
+          <label class="f">列數<select id="s_rows"><option>10</option><option selected>15</option><option>20</option></select></label>
+        </div>
+        <p class="hint">都可以留白，印出來再手寫。</p>
+        <div class="btns">
+          <button class="btn o" id="printSign">列印簽到表</button>
+          <a class="btn g" href="templates/signin-sheet.xlsx" download="一拍即合_簽到表範本.xlsx">下載 Excel</a>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-rc">
+        <h2 id="h-rc">勞務報酬單（勞報單）</h2>
+        <p class="desc">發臨時工作人員薪水、核銷用。A4 直式一張印兩份，沿虛線剪開。</p>
+        <div class="thumb" aria-hidden="true">
+          <div class="t">勞務報酬單（臨時工作人員）</div>
+          <table><tr><th>給付單位</th><td></td><th>統一編號</th><td></td></tr><tr><th>姓名</th><td></td><th>身分證字號</th><td></td></tr><tr><th>給付總額</th><td></td><th>實付金額</th><td></td></tr></table>
+        </div>
+        <div class="fields">
+          <label class="f">給付單位<input id="r_payer" placeholder="公司或師傅名稱"></label>
+          <label class="f">統一編號<input id="r_taxid" inputmode="numeric" maxlength="8"></label>
+          <label class="f">活動名稱<input id="r_event"></label>
+          <label class="f">工作內容<input id="r_role" placeholder="例如：佈展"></label>
+          <label class="f">工作日期<input id="r_date"></label>
+          <label class="f">張數<select id="r_count"><option value="2">2 份（1 張 A4）</option><option value="4">4 份（2 張 A4）</option><option value="10" selected>10 份（5 張 A4）</option><option value="20">20 份（10 張 A4）</option></select></label>
+        </div>
+        <p class="hint">身分證字號、地址等個資留給工作人員本人現場填寫。</p>
+        <div class="btns">
+          <button class="btn o" id="printRc">列印勞報單</button>
+          <a class="btn g" href="templates/labor-receipt.xlsx" download="一拍即合_勞報單範本.xlsx">下載 Excel</a>
+        </div>
+      </section>
+    </div>
+
+    <section class="cta">
+      <div>
+        <h2>用一拍即合，簽到表自己長出來</h2>
+        <p>一檔活動刊登一次，錄取名單、現場口令打卡的簽到簽退時間和工時，會自動帶進簽到表。測試期全部免費。</p>
+      </div>
+      <a class="btn b" href="app.html#/post">刊登活動</a>
+    </section>
+
+    <section class="notes">
+      <h2>填勞報單要注意</h2>
+      <ol>
+        <li>所得類別：臨時工讀一般勾「薪資所得（50）」。<span>不確定的話，問你的會計或記帳士。</span></li>
+        <li>代扣所得稅、二代健保補充保費：<span>要不要扣、扣多少，依財政部國稅局和衛福部健保署當年度規定。</span></li>
+        <li>身分證字號、戶籍地址：<span>由工作人員本人填寫。保存要上鎖，用完依個人資料保護法銷毀。一拍即合不會向工作人員收集身分證字號或銀行帳號。</span></li>
+        <li>現場簽到表要留存：<span>政府標案核銷常常需要簽到表搭配勞報單一起附上。</span></li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b style="color:var(--ink)">一拍即合</b>
+    <span>互相合作　創造無間成就</span>
+    <a href="index.html">首頁</a>
+    <a href="plaza.html">招募廣場</a>
+    <span style="margin-left:auto">範本可自由使用、修改</span>
+  </div>
+</footer>
+
+<div id="print"></div>
+
+<script>
+(function(){
+  function v(id){ var e=document.getElementById(id); return e ? e.value.trim() : ''; }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function pageSize(s){ document.getElementById('pagesize').textContent='@page{size:A4 '+s+';margin:12mm}'; }
+  var P=document.getElementById('print');
+
+  document.getElementById('printSign').onclick=function(){
+    var n=+v('s_rows')||15, rows='', rh=Math.min(9.5,124/n).toFixed(1)+'mm';
+    for(var i=1;i<=n;i++) rows+='<tr style="height:'+rh+'"><td>'+i+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+    P.innerHTML='<div class="ps"><h1>工作人員簽到表</h1>'+
+      '<div class="info"><div>活動名稱：'+esc(v('s_event'))+'</div><div>日期：'+esc(v('s_date'))+'</div><div>主辦單位：'+esc(v('s_org'))+'</div>'+
+      '<div>職務：'+esc(v('s_role'))+'</div><div>表定時間：'+esc(v('s_time'))+'</div><div>集合點：'+esc(v('s_place'))+'</div></div>'+
+      '<table><thead><tr><th style="width:5%">序號</th><th style="width:12%">姓名</th><th style="width:13%">聯絡電話</th><th style="width:8%">簽到</th><th style="width:8%">簽退</th><th style="width:8%">休息(分)</th><th style="width:8%">工時(時)</th><th style="width:8%">單價</th><th style="width:10%">應付金額</th><th>簽名</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+      '<div class="foot"><span>現場負責人簽名：＿＿＿＿＿＿＿＿＿＿＿＿</span><span>日期：＿＿＿＿＿＿＿＿</span></div>'+
+      '<div class="brandline">範本來源：一拍即合　eason4546.github.io/yipaijihe</div></div>';
+    pageSize('landscape'); window.print();
+  };
+
+  document.getElementById('printRc').onclick=function(){
+    var n=+v('r_count')||2, html='';
+    var one='<div class="rc"><h1>勞務報酬單（臨時工作人員）</h1><table>'+
+      '<tr><th>給付單位</th><td>'+esc(v('r_payer'))+'</td><th>統一編號</th><td>'+esc(v('r_taxid'))+'</td></tr>'+
+      '<tr><th>活動名稱</th><td>'+esc(v('r_event'))+'</td><th>工作內容</th><td>'+esc(v('r_role'))+'</td></tr>'+
+      '<tr><th>工作日期</th><td>'+esc(v('r_date'))+'</td><th>工作時間</th><td></td></tr>'+
+      '<tr><th>姓名</th><td></td><th>身分證字號</th><td></td></tr>'+
+      '<tr><th>聯絡電話</th><td></td><th>出生年月日</th><td></td></tr>'+
+      '<tr><th>戶籍地址</th><td colspan="3"></td></tr>'+
+      '<tr><th>所得類別</th><td colspan="3">□ 薪資所得（50）　□ 執行業務所得（9B）　□ 其他所得（92）</td></tr></table>'+
+      '<table class="amt" style="margin-top:-1px"><tr><th>工作時數</th><th>單價</th><th>給付總額</th><th>代扣所得稅</th><th>代扣二代健保</th><th>實付金額</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>'+
+      '<table style="margin-top:-1px"><tr><th>領款人簽章</th><td style="height:14mm"></td><th>領款日期</th><td></td></tr></table>'+
+      '<div class="sm">身分證影本請另附。代扣稅額與補充保費依國稅局、健保署當年度規定。範本來源：一拍即合</div></div>';
+    for(var i=0;i<n;i++){ html+=one; if(i%2===1 && i<n-1) html+='<div class="pb"></div>'; }
+    P.innerHTML=html;
+    pageSize('portrait'); window.print();
+  };
+})();
+</script>
+</body>
+</html>

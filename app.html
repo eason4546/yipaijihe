@@ -123,6 +123,9 @@ input.i:focus,select.i:focus,textarea.i:focus{outline:2px solid var(--blue);bord
 .steps i.on{background:var(--orange)}
 .sub-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px}
 .sb{border:1px dashed var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.gear{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.gear a{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:48px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--ink);text-decoration:none;font-weight:700;font-size:15px}
+.gear a span{color:var(--muted)}
 #print{display:none}
 @media print{
   body{background:#fff;color:#000}
@@ -131,6 +134,11 @@ input.i:focus,select.i:focus,textarea.i:focus{outline:2px solid var(--blue);bord
   #print table{width:100%;border-collapse:collapse;margin-bottom:18px}
   #print th,#print td{border:1px solid #999;padding:6px;text-align:left;height:30px}
   #print h2{font-size:16px;margin:10px 0 6px}
+  #print .rc{height:128mm;page-break-inside:avoid}
+  #print .rc table{margin-bottom:0;margin-top:-1px}
+  #print .rc th{width:16%;background:#eee}
+  #print .rc .amt th,#print .rc .amt td{width:auto;text-align:center}
+  #print .rc+.rc{border-top:1px dashed #888;padding-top:4mm}
 }
 @media (max-width:420px){ .grid2{grid-template-columns:1fr} .kv{grid-template-columns:76px minmax(0,1fr)} }
 </style>
@@ -138,6 +146,7 @@ input.i:focus,select.i:focus,textarea.i:focus{outline:2px solid var(--blue);bord
 <body>
 <script src="splash.js"></script>
 <script src="plaza-card.js"></script>
+<script src="gear.js"></script>
 <header><div class="wrap bar">
   <a class="brand" href="index.html"><img src="logo.png" alt=""><span><b>一拍即合</b><small>互相合作　創造無間成就</small></span></a>
   <a class="sw" id="sw" href="#/boss">我是雇主</a>
@@ -279,6 +288,7 @@ async function jobPage(pid){
       }).join('');
     }).join('')+'</div>'+
     (j.reviews&&j.reviews.length?'<div class="card"><h3>上過工的人怎麼說</h3>'+j.reviews.map(function(r){ return '<div class="person"><div class="row"><span style="color:#F5B301">'+'★'.repeat(Math.round(r.score||0))+'</span><span class="muted small">'+esc(r.date)+'</span></div><p>'+esc(r.text)+'</p></div>'; }).join('')+'</div>':'')+
+    gearCard(j)+
     '</div>';
   $app.querySelectorAll('[data-apply]').forEach(function(b){ b.onclick=async function(){
     if(!S.worker){ go('#/login?next='+encodeURIComponent('/job/'+pid)); return; }
@@ -286,6 +296,15 @@ async function jobPage(pid){
     try{ await api({a:'apply',id:S.worker.id,token:S.worker.token,shift:b.dataset.apply}); toast('報名成功！雇主確認後會通知你'); JOBS=null; jobPage(pid); }
     catch(e){ toast(e.message); b.disabled=false; b.textContent='報名'; }
   }; });
+}
+
+function gearCard(j){
+  if(!window.GEAR) return '';
+  const ids=GEAR.pick(j); if(!ids.length) return '';
+  return '<div class="card"><div class="row between"><h3>出發前備好</h3><a class="small" href="plaza.html#gear">逛裝備鋪 ›</a></div>'+
+    '<p class="muted small">依這檔的服裝和工作內容推薦。</p>'+
+    '<div class="gear">'+ids.map(function(id){ return '<a href="'+esc(GEAR.link(id))+'" target="_blank" rel="noopener sponsored">'+esc(GEAR.items[id].name)+'<span aria-hidden="true">›</span></a>'; }).join('')+'</div>'+
+    '<p class="muted small">'+esc(GEAR.note)+'</p></div>';
 }
 
 /* ========= 登入 ========= */
@@ -517,7 +536,8 @@ async function bossPage(){
         ((LINE_CHANNEL_ID||GOOGLE_CLIENT_ID)?'<p class="small muted">登入後可以在這裡管理所有刊登：</p>'+socialButtons()+'<div class="divider">或</div>':'')+
         '<a class="btn b full" href="#/post">'+((LINE_CHANNEL_ID||GOOGLE_CLIENT_ID)?'不登入，直接刊登':'開始刊登')+'</a>'+
         '<p class="small muted">測試期免費。不登入也能刊登，刊登後會給你一條專屬管理連結，請收好。</p>'+
-      '</div>'+myLinks()+'</div>';
+      '</div>'+myLinks()+
+      '<a class="card" href="templates.html"><div class="row between"><b>免費勞報單、簽到表範本</b><span class="muted">›</span></div><span class="small muted">線上填好直接列印，或下載 Excel。</span></a></div>';
     bindSocial('/boss','boss'); return;
   }
   loading();
@@ -530,7 +550,8 @@ async function bossPage(){
         '<div class="meta"><span>'+esc(e.city)+'</span><span>'+range(e.start,e.end)+'</span><span>'+e.shifts+' 個班別</span></div>'+
         '<div class="row"><span class="chip g">已錄取 '+e.got+' / '+e.need+'</span>'+(e.pending?'<span class="chip a">'+e.pending+' 人等你回覆</span>':'')+'</div>'+
         (e.status==='待審核'?'<p class="small muted">我們確認資料後就會開放報名，通常 1 天內。</p>':'')+'</a>';
-    }).join('')+myLinks(d.events)+'</div>';
+    }).join('')+myLinks(d.events)+
+    '<a class="card" href="templates.html"><div class="row between"><b>免費勞報單、簽到表範本</b><span class="muted">›</span></div><span class="small muted">線上填好直接列印，或下載 Excel。</span></a></div>';
   document.getElementById('out').onclick=function(){ delete S.ident; delete S.employer; delete S.profile; save(); bossPage(); };
 }
 function myLinks(skip){
@@ -628,7 +649,7 @@ async function managePage(pid,key){
     '<div class="row between sb" style="flex-direction:row"><div><b>打卡口令</b><div class="small muted">當天公布給拍檔</div></div><div class="big" style="font-size:36px">'+esc(e.code)+'</div></div>'+
     (e.status==='待審核'?'<p class="small muted">審核中：開放後拍檔才看得到這檔活動。</p>':'')+'</div>'+
     (shifts.length>1?'<select class="i" id="mg_s" aria-label="班別">'+shifts.map(function(s){return '<option value="'+s.id+'"'+(s.id===MG.shift?' selected':'')+'>'+md(s.date)+'（'+wk(s.date)+'）'+esc(s.role)+' '+esc(s.start)+'</option>';}).join('')+'</select>':'')+
-    '<div class="card"><div class="row between"><div><b>'+esc(cur.role)+(cur.rescue?' <span class="chip o">救援</span>':'')+'</b><div class="muted small num">'+md(cur.date||'')+' '+esc(cur.start)+'－'+esc(cur.end)+'・$'+money(cur.price)+'/'+(cur.mode==='日薪'?'天':'時')+'</div></div><button class="btn g sm" id="mg_print">列印簽到表</button></div>'+
+    '<div class="card"><div class="row between"><div><b>'+esc(cur.role)+(cur.rescue?' <span class="chip o">救援</span>':'')+'</b><div class="muted small num">'+md(cur.date||'')+' '+esc(cur.start)+'－'+esc(cur.end)+'・$'+money(cur.price)+'/'+(cur.mode==='日薪'?'天':'時')+'</div></div><div class="btns" style="flex:none"><button class="btn g sm" id="mg_print">簽到表</button><button class="btn g sm" id="mg_rc">勞報單</button></div></div>'+
     '<div class="stat"><div><b>'+cnt(['已錄取','完成','遲到','放鳥'])+'<small class="muted" style="font-size:13px">/'+cur.need+'</small></b><span>已錄取</span></div><div><b>'+cnt(['完成','遲到'])+'</b><span>已到場</span></div><div><b>'+cnt(['報名中'])+'</b><span>待回覆</span></div></div>'+
     (ppl.length?ppl.map(person).join(''):'<p class="muted" style="text-align:center;padding:16px 0">還沒有人報名這個班別</p>')+'</div>'+
     '<p class="small muted">狀態改完會自動算工時、應付金額和拍檔的出勤信用。</p></div>';
@@ -662,6 +683,28 @@ async function managePage(pid,key){
       list.map(function(p,i){ return '<tr><td>'+(i+1)+'</td><td>'+esc(p.worker)+'</td><td>'+esc(p.name)+'</td><td>'+esc(p.in)+'</td><td>'+esc(p.out)+'</td><td>'+esc(p.hours)+'</td><td>'+esc(p.status)+'</td><td></td></tr>'; }).join('')+
       Array(Math.max(0,8-list.length)).fill('<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>').join('')+
       '</table><p>現場負責人簽名：＿＿＿＿＿＿＿＿＿＿　　日期：＿＿＿＿＿＿</p>';
+    window.print();
+  };
+  document.getElementById('mg_rc').onclick=function(){
+    const list=ppl.filter(function(p){ return ['完成','遲到'].indexOf(p.status)>=0; });
+    if(!list.length){ toast('先把到場的拍檔標成「到場」或「遲到」，才會產生勞報單'); return; }
+    const org=e.employer?e.employer.name:'';
+    document.getElementById('print').innerHTML=list.map(function(p,i){
+      return '<div class="rc">'+
+        '<h2 style="text-align:center">勞務報酬單（臨時工作人員）</h2><table>'+
+        '<tr><th>給付單位</th><td>'+esc(org)+'</td><th>統一編號</th><td></td></tr>'+
+        '<tr><th>活動名稱</th><td>'+esc(e.title)+'</td><th>工作內容</th><td>'+esc(cur.role)+'</td></tr>'+
+        '<tr><th>工作日期</th><td>'+esc(cur.date||'')+'</td><th>工作時間</th><td>'+esc(p.in)+'－'+esc(p.out)+'</td></tr>'+
+        '<tr><th>姓名</th><td>'+esc(p.name)+'</td><th>身分證字號</th><td></td></tr>'+
+        '<tr><th>聯絡電話</th><td>'+esc(p.phone)+'</td><th>出生年月日</th><td></td></tr>'+
+        '<tr><th>戶籍地址</th><td colspan="3"></td></tr>'+
+        '<tr><th>所得類別</th><td colspan="3">□ 薪資所得（50）　□ 執行業務所得（9B）　□ 其他所得（92）</td></tr></table>'+
+        '<table class="amt"><tr><th>工作時數</th><th>單價</th><th>給付總額</th><th>代扣所得稅</th><th>代扣二代健保</th><th>實付金額</th></tr>'+
+        '<tr><td>'+esc(p.hours)+'</td><td>'+money(cur.price)+(cur.mode==='日薪'?'／天':'／時')+'</td><td>'+(p.pay?money(p.pay):'')+'</td><td></td><td></td><td></td></tr></table>'+
+        '<table><tr><th>領款人簽章</th><td style="height:46px"></td><th>領款日期</th><td></td></tr></table>'+
+        '<p style="font-size:10px;color:#555;margin:2px 0 0">身分證字號、戶籍地址由本人填寫；身分證影本請另附。代扣稅額與補充保費依國稅局、健保署當年度規定。由一拍即合產生</p></div>'+
+        (i%2===1&&i<list.length-1?'<div style="page-break-after:always"></div>':'');
+    }).join('');
     window.print();
   };
 }

@@ -75,7 +75,19 @@ button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:poin
 .bld .plate{position:absolute;left:50%;bottom:0;transform:translate(-50%,62%);text-align:center;white-space:nowrap;background:var(--plate);color:var(--plate-ink);border-radius:8px;padding:2px 10px 3px;box-shadow:0 3px 0 rgba(60,30,10,.35),0 6px 12px rgba(40,30,10,.18);font-size:clamp(11px,3.2cqw,14px);font-weight:900;letter-spacing:.04em;line-height:1.35}
 .bld .plate small{display:block;font-size:.78em;font-weight:500;opacity:.9;letter-spacing:.02em}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-.board{pointer-events:auto;cursor:pointer}
+.board,.spot{pointer-events:auto;cursor:pointer}
+.spot .sg{position:absolute;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--paper-ink);line-height:1;white-space:nowrap;overflow:hidden}
+.spot .sg.v{flex-direction:column;line-height:1.1;text-align:center}
+.spot .sg.wood{color:#FFF1DC;text-shadow:0 1px 0 rgba(60,30,10,.55);letter-spacing:.14em}
+.spot .ttl{position:absolute;left:50%;top:-2%;transform:translate(-50%,-100%);white-space:nowrap;font-weight:900;font-size:clamp(12px,3.6cqw,17px);color:var(--ink);background:var(--bg);border-radius:999px;padding:2px 12px;box-shadow:0 4px 10px rgba(40,40,20,.15)}
+.spot .ttl em{font-style:normal;font-size:.78em;margin-left:4px;color:#fff;background:var(--orange);border-radius:999px;padding:1px 7px}
+.shelf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.shelf a{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:46px;padding:0 12px;border-radius:12px;background:var(--soft);color:var(--ink);text-decoration:none;font-weight:700;font-size:14.5px}
+.shelf a span{color:var(--muted)}
+.plan{display:flex;flex-direction:column;gap:8px}
+.plan div{border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.plan b{display:block;font-weight:900}
+.plan span{font-size:13px;color:var(--muted)}
 .board .pp{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--paper-ink);text-align:center;line-height:1.05}
 .board .pp b{font:900 clamp(14px,5.2cqw,26px)/1 var(--f-num)}
 .board .pp span{font-size:clamp(8px,2.2cqw,12px);font-weight:900;margin-top:3px;white-space:nowrap}
@@ -174,10 +186,12 @@ table.t th{font-size:12px;color:var(--muted);font-weight:700}
 <div class="mask" id="mask" hidden></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true" hidden><div class="grab"></div><button class="x" id="sheetX" aria-label="關閉">×</button><div id="sheetBody"></div></section>
 
+<script src="gear.js"></script>
 <script>
 (function(){
 'use strict';
 var API="https://hjzihajhrfdzhquoydxl.supabase.co/functions/v1/api?forceFunctionRegion=ap-northeast-1";
+var SPONSOR_CONTACT="";   // 聯名洽詢連結（例如 LINE 官方帳號網址）；空白時顯示「洽詢管道即將開放」
 var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 var S={}; try{S=JSON.parse(localStorage.getItem('ypjh')||'{}')||{};}catch(e){}
 function $(id){return document.getElementById(id);}
@@ -243,7 +257,9 @@ function groupByEmployer(jobs){
 function load(){
   var cached=null;try{cached=JSON.parse(localStorage.getItem('ypjh_jobs')||'null');}catch(e){}
   var done=false;
-  function use(list,isDemo){JOBS=list;DEMO=isDemo;EMPS=groupByEmployer(list);$('demoTag').hidden=!isDemo;build();done=true;}
+  function use(list,isDemo){JOBS=list;DEMO=isDemo;EMPS=groupByEmployer(list);$('demoTag').hidden=!isDemo;build();
+    if(!done){if(location.hash==='#gear')showShop();else if(location.hash==='#sponsor')showSponsor();}
+    done=true;}
   if(cached&&cached.length) use(cached,false);
   fetch(API,{method:'POST',body:JSON.stringify({a:'jobs'})}).then(function(r){return r.json();}).then(function(j){
     if(j.ok&&j.jobs&&j.jobs.length){try{localStorage.setItem('ypjh_jobs',JSON.stringify(j.jobs));}catch(e){} use(j.jobs,false);}
@@ -278,8 +294,12 @@ function build(){
   b.setAttribute('role','button');b.tabIndex=0;b.setAttribute('aria-label','今日任務榜，看遊戲規則');
   b.onclick=showRules;b.onkeydown=function(e){if(e.key==='Enter')showRules();};
   el('',bx-bw/2+2,by+1,12,'<img src="plaza/flowers.webp" alt="">');
-  el('',82,by-6,30,'<img src="plaza/sakura.webp" alt="">');
-  el('',93,by+2,12,'<img src="plaza/rocks.webp" alt="">');
+  /* 裝備鋪：在任務榜對面 */
+  el('',97,by-14,20,'<img src="plaza/sakura.webp" alt="">');
+  var sw=34,shop=el('spot',75,by+3,sw,'<img src="plaza/shop.webp" alt=""><span class="ttl">裝備鋪</span>'+
+    '<span class="sg v" style="left:8%;top:29.5%;width:12%;height:28.5%;font-size:'+(sw*0.095).toFixed(2)+'cqw">裝<br>備</span>');
+  spotBind(shop,'裝備鋪，出發前要準備的東西',showShop);
+  el('',93,by+5,12,'<img src="plaza/rocks.webp" alt="">');
   /* 招募處沿著小路左右排 */
   var pts=[[50,gy-3],[50,gy+8]],cur=by+6,i;
   var DECO=['sakura','tree','pond','bamboo','tree','sakura','bamboo','pond'];
@@ -317,6 +337,16 @@ function build(){
     if(R()>.4) el('',left?cx-w*0.55:cx+w*0.5,bottom-2,9,'<img src="plaza/flowers.webp" alt="">');
     cur=bottom+15-h*0.3;
   });
+  /* 此地招商空地＋冠名茶棧 */
+  var lw=40,lh=lw*0.8026,ly=cur+14+lh;
+  var lot=el('spot',25,ly,lw,'<img src="plaza/lot.webp" alt=""><span class="ttl">此地招商<em>聯名</em></span>'+
+    '<span class="sg wood" style="left:31%;top:8%;width:30%;height:17%;font-size:'+(lw*0.052).toFixed(2)+'cqw;transform:skewY(-8deg)">此地招商</span>');
+  spotBind(lot,'此地招商，品牌聯名合作',showSponsor);
+  var tw=30,tea=el('spot',76,ly+3,tw,'<img src="plaza/tea.webp" alt=""><span class="ttl">補給茶棧<em>冠名</em></span>'+
+    '<span class="sg v" style="left:9.5%;top:31.5%;width:13.5%;height:28.5%;font-size:'+(tw*0.1).toFixed(2)+'cqw">茶<br>棧</span>');
+  spotBind(tea,'補給茶棧，開放品牌冠名',showSponsor);
+  pts.push([50,ly-lh*0.4]);
+  cur=ly;
   worldH=cur+40;
   pts.push([50,worldH-16]);
   el('',50,worldH-4,30,'<img src="plaza/bridge.webp" alt="">');
@@ -433,6 +463,28 @@ function showMe(){
 }
 
 /* 規則 */
+/* ================= 裝備鋪、此地招商 ================= */
+function spotBind(d,label,fn){d.setAttribute('role','button');d.tabIndex=0;d.setAttribute('aria-label',label);d.onclick=fn;d.onkeydown=function(e){if(e.key==='Enter')fn();};}
+function showShop(){
+  var G=window.GEAR;
+  var h='<div class="hero"><img src="plaza/shop.webp" alt=""><div><div class="small muted">招募廣場</div><h2>裝備鋪</h2><p class="small muted">出發前備齊，上工更順手。</p></div></div>';
+  if(!G){h+='<p class="note">裝備清單載入失敗，請重新整理。</p>';openSheet(h);return;}
+  G.shelves.forEach(function(sh){
+    h+='<h3>'+esc(sh.title)+'</h3><p class="small muted" style="margin:-4px 0 8px">'+esc(sh.note)+'</p><div class="shelf">'+
+      sh.ids.map(function(id){return'<a href="'+esc(G.link(id))+'" target="_blank" rel="noopener sponsored">'+esc(G.items[id].name)+'<span aria-hidden="true">›</span></a>';}).join('')+'</div>';
+  });
+  h+='<p class="note">'+esc(G.note)+'裝備只是推薦，不影響等級和報名。</p>';
+  openSheet(h);
+}
+function showSponsor(){
+  var h='<div class="hero"><img src="plaza/lot.webp" alt=""><div><div class="small muted">招募廣場</div><h2>此地招商・歡迎聯名</h2><p class="small muted">每天都有拍檔經過這裡，跟他們打聲招呼吧。</p></div></div>'+
+    '<h3>可以怎麼合作</h3><div class="plan">'+
+    '<div><b>蓋一間品牌建築</b><span>空地和茶棧可以換成你的店：飲料、運動用品、工作服、機車行都很適合。</span></div>'+
+    '<div><b>送拍檔小獎勵</b><span>提供折價券，拍檔做完一班或寫完評價就能抽，品牌曝光又實用。</span></div>'+
+    '<div><b>燈會季限定場景</b><span>燈會、跨年檔期，廣場換上限定佈景，可以掛你的名字。</span></div></div>'+
+    (SPONSOR_CONTACT?'<div class="row2" style="grid-template-columns:1fr"><a class="btn o" href="'+esc(SPONSOR_CONTACT)+'" target="_blank" rel="noopener">洽詢聯名合作</a></div>':'<p class="note">洽詢管道即將開放。</p>');
+  openSheet(h);
+}
 function showRules(){
   var h='<h2>廣場規則</h2><div class="small muted">做越多、評價越好，等級和招募處就會長大。</div>'+
   '<h3>拍檔怎麼升級</h3><table class="t"><tr><th>事件</th><th>經驗值</th></tr><tr><td>完成一場任務</td><td class="num">+100</td></tr><tr><td>完成救援班（急件）</td><td class="num">+50 加成</td></tr><tr><td>雙方互評 4.5 星以上</td><td class="num">+20</td></tr><tr><td>放鳥（沒到也沒取消）</td><td class="num">−150</td></tr></table>'+
